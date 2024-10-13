@@ -17,36 +17,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 // import { Int } from './int64.mjs';
 
-
 function die(msg) {
- //   alert("⚠️​ PSFree failed: " + msg + "\n🔄​ Click accept and the page will reload");
-
-    // Simula la pulsación de la tecla "Escape"
-    const event = new KeyboardEvent('keydown', { keyCode: 27, which: 27 });
-    document.dispatchEvent(event);
-
-    // Lanza la excepción
-    throw new Error("⚠️​ PSFree fail! " + msg + "\n​★ Click accept to 🔄");
+    // Lanza la excepción con el nuevo texto
+    throw new Error("⚠️​ PSFree fail! " + msg + "\n​★ Click accept and press △ to refresh page 🔄");
 }
 
-// Función para manejar el evento de pulsación de tecla
-function manejarKeyPress(event) {
-    // Verifica si la tecla presionada es la tecla "Escape" (código 27)
-    if (event.keyCode === 27) {
-        // Recarga la página
-        location.reload();
-    }
-}
+// Se eliminan todas las funciones relacionadas con la tecla Escape y eventos de teclado
 
-// Registra un escuchador de eventos para keydown
-document.addEventListener("keydown", manejarKeyPress);
-
+// function debug_log y otras funciones permanecen igual
 function debug_log(msg) {
-    // let textNode = document.createTextNode(msg);
-    // let node = document.createElement("p").appendChild(textNode);
-
-    // document.body.appendChild(node);
-    // document.body.appendChild(document.createElement("br"));
     print(msg);
 }
 
@@ -65,7 +44,6 @@ function str2array(str, length, offset) {
     return a;
 }
 
-// alignment must be 32 bits and is a power of 2
 function align(a, alignment) {
     if (!(a instanceof Int)) {
         a = new Int(a);
