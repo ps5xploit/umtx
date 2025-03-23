@@ -31,7 +31,11 @@ let wk_gadgetmap = {
 	"mov [rdi], rax": 	0x000D2987,
 	"mov [rdi], eax": 	0x000004D4,
 
-	"infloop": 			0x000172C1,
+	"infloop": 			0x000172C1,	
+
+    "shl rax, 4"     : 0x013AD166,
+    // "shr rax, 3"     : 0x00E11C6C,
+    // "shr rax, 4"     : 0x01BC078D,
 
 	//branching specific gadgets
 	"cmp [rcx], eax": 	0x00690582,
@@ -387,5 +391,7 @@ const OFFSET_KERNEL_SECURITY_FLAGS              = 0x072866EC; // data = 0x066366
 const OFFSET_KERNEL_TARGETID                    = 0x072866F5; // data = 0x066366F5
 const OFFSET_KERNEL_QA_FLAGS                    = 0x07286710; // data = 0x06636710
 const OFFSET_KERNEL_UTOKEN_FLAGS                = 0x07286778; // data = 0x06636778
-const OFFSET_KERNEL_PRISON0                     = 0x02A635B0; // data = 0x01E13470
+const OFFSET_KERNEL_PRISON0                     = 0x02A635B0; // data = 0x01E135B0
 const OFFSET_KERNEL_ROOTVNODE                   = 0x07493510; // data = 0x06843510
+
+const OFFSET_KERNEL_PS4SDK                      = 0x023D9048;

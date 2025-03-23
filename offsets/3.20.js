@@ -33,6 +33,8 @@ let wk_gadgetmap = {
 
     "infloop": 0x00007351,
 
+    "shl rax, 4"     : 0x00278F36,
+
     //branching specific gadgets
     "cmp [rcx], eax" : 0x00E4EF7B,
     "sete al"        : 0x00022549,
