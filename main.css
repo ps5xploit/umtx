@@ -209,7 +209,7 @@ a:focus {
 
 
 .log {
-    display: flex;
+    display: block;
     flex-direction: column;
     flex-grow: 1;
     unicode-bidi: embed;
