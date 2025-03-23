@@ -41,10 +41,6 @@ input:focus {
     outline:none;
 }
 
-input:focus {
-    outline:none;
-}
-
 a {
     color: var(--text-color-secondary);
 }
@@ -213,15 +209,15 @@ a:focus {
 
 
 .log {
-    display: block;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     unicode-bidi: embed;
     font-family: monospace;
-    white-space: pre-wrap; /* Asegura que los saltos de línea se respeten y el texto se ajuste */
-    font-size: 25px;
-    color: #fff;
-color: var(--text-color-primary);
+    white-space: pre;
+    color: var(--text-color-primary);
     background-color: inherit;
+  
     padding: 8px;
    margin-left:30px;
     box-sizing: border-box;
