@@ -26,8 +26,8 @@ const payload_map = [
     //     fileName: "elfldr.elf",
     //     author: "john-tornblom",
     //     projectSource: "https://github.com/ps5-payload-dev/elfldr",
-    //     binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-    //     version: "0.18.1",
+    //     binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/12400108209",
+    //     version: "?",
     //     supportedFirmwares: ["1.", "2.", "3.", "4.", "5."]
     // },
     // etaHEN is added twice so that on 1.xx-2.xx you can load it in webkit only mode too
@@ -39,153 +39,30 @@ const payload_map = [
         author: "LightningMods, Buzzer, sleirsgoevy, ChendoChap, astrelsky, illusion, CTN, SiSTR0, Nomadic",
         projectSource: "https://github.com/LightningMods/etaHEN",
         binarySource: "https://github.com/LightningMods/etaHEN/releases/download/1.9b/etaHEN.bin",
-        version: "1.9b",
+        version: "2.0b",
         supportedFirmwares: ["3.", "4."]
     },
-    {
-        displayTitle: "etaHEN",
-        description: "AIO HEN",
-        fileName: "etaHEN.bin",
-        author: "LightningMods, Buzzer, sleirsgoevy, ChendoChap, astrelsky, illusion, CTN, SiSTR0, Nomadic",
-        projectSource: "https://github.com/LightningMods/etaHEN",
-        binarySource: "https://github.com/LightningMods/etaHEN/releases/download/1.9b/etaHEN.bin",
-        version: "1.9b",
-        supportedFirmwares: ["1.", "2."],
-        toPort: 9021
+     {
+        displayTitle: "kstuff-550",
+        description: "kstuff-550",
+        fileName: "kstuff-550.elf",
+        author: "kstuff-550",
+        projectSource: "kstuff-550",
+        binarySource: "kstuff-550",
+        version: "5.50",
+        supportedFirmwares: ["5", "550"]
     },
-    {
-        displayTitle: "ps5-kstuff",
-        description: "FPKG enabler",
-        fileName: "kstuff.elf",
-        author: "sleirsgoevy, john-tornblom, EchoStretch, buzzer-re, BestPig, LightningMods, zecoxao",
-        projectSource: "https://github.com/EchoStretch/kstuff",
-        binarySource: "https://github.com/EchoStretch/kstuff/releases/download/5xx-support-v1/kstuff.elf",
-        version: "081f53b",
-        supportedFirmwares: ["3.", "4.", "5."],
-        toPort: 9021
-    },
-    {
-        displayTitle: "Byepervisor HEN",
-        description: "FPKG enabler",
-        fileName: "byepervisor.elf",
-        author: "SpecterDev, ChendoChap, flatz, fail0verflow, Znullptr, kiwidog, sleirsgoevy, EchoStretch, LightningMods, BestPig, zecoxao", 
-        projectSource: "https://github.com/EchoStretch/Byepervisor",
-        binarySource: "https://github.com/EchoStretch/Byepervisor/actions/runs/12567456429",
-        version: "47a6ae7",
-        supportedFirmwares: ["1.00", "1.01", "1.02", "1.12", "1.14", "2.00", "2.20", "2.25", "2.26", "2.30", "2.50", "2.70"],
-        toPort: 9021
-    },
-    {
-        displayTitle: "libhijacker game-patch",
-        description: "Patches supported games to run at higher framerates, and adds debug menus to certain titles.",
-        fileName: "libhijacker-game-patch.v1.160.elf",
-        author: "illusion0001, astrelsky",
-        projectSource: "https://github.com/illusion0001/libhijacker",
-        binarySource: "https://github.com/illusion0001/libhijacker-game-patch/releases/tag/1.160-75ab26a3",
-        version: "1.160",
-        supportedFirmwares: ["3.", "4."]
-    },
-    {
-        displayTitle: "websrv",
-        description: "Custom homebrew loader. Runs on port 8080.",
-        fileName: "websrv.elf",
-        author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/websrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-        version: "0.20",
-        toPort: 9021
-    },
-    {
-        displayTitle: "ftpsrv",
-        description: "FTP server. Runs on port 2121.",
-        fileName: "ftpsrv.elf",
-        author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/ftpsrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-        version: "0.11.2",
-        toPort: 9021
-    },
-    {
-        displayTitle: "klogsrv",
-        description: "Klog server. Runs on port 3232.",
-        fileName: "klogsrv.elf",
-        author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/klogsrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-        version: "0.5.2",
-        toPort: 9021
-    },
-    {
-        displayTitle: "shsrv",
-        description: "Telnet shell server. Runs on port 2323.",
-        fileName: "shsrv.elf",
-        author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/shsrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-        version: "0.13.1",
-        toPort: 9021
-    },
-    {
-        displayTitle: "gdbsrv",
-        description: "GDB server. Runs on port 2159.",
-        fileName: "gdbsrv.elf",
-        author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/gdbsrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-        version: "0.5",
-        toPort: 9021
-    },
-    {
-        displayTitle: "ps5debug",
-        description: "Debugger (Experimental beta)",
-        fileName: "ps5debug_v1.0b2.elf",
-        author: "SiSTR0, ctn123",
-        projectSource: "https://github.com/GoldHEN/ps5debug",
-        binarySource: "https://github.com/GoldHEN/ps5debug/releases/download/1.0b2/ps5debug_v1.0b2.elf",
-        version: "1.0b2",
-        supportedFirmwares: ["3.", "4."],
-        toPort: 9021
-    },
-    {
-        displayTitle: "ps5debug",
-        description: "Debugger, open source version by DizzRL",
-        fileName: "ps5debug_dizz.elf",
-        author: "Dizz, astrelsky, John Tornblom, SiSTR0, golden, idlesauce",
-        projectSource: "https://github.com/idlesauce/ps5debug",
-        binarySource: "https://github.com/idlesauce/ps5debug/releases/download/v0.0.1/ps5debug.elf",
-        version: "0.0.1-r2",
-        toPort: 9021
-    },
-    {
-        displayTitle: "ps5-versions",
-        description: "Shows kernel build, os and sdk versions",
-        fileName: "ps5-versions.elf",
-        author: "SiSTRo",
-        projectSource: "https://github.com/SiSTR0/ps5-versions",
-        binarySource: "https://github.com/SiSTR0/ps5-versions/releases/download/v1.0/ps5-versions.elf",
-        version: "1.0",
-        supportedFirmwares: ["1.", "2.", "3.", "4."]
-    },
-    {
-        displayTitle: "ps5-remoteplay-get-pin",
-        description: "Get Remote Play PIN for offline activated users. Send again to cancel.",
-        fileName: "rp-get-pin.elf",
-        author: "idlesauce",
-        projectSource: "https://github.com/idlesauce/ps5-remoteplay-get-pin",
-        binarySource: "https://github.com/idlesauce/ps5-remoteplay-get-pin/releases/tag/v0.1.1",
-        version: "0.1.1",
-        toPort: 9021
-    },
-    {
-        // https://github.com/Storm21CH/PS5_Browser_appCache_remove
-        displayTitle: "Browser appcache remover",
-        description: "Deletes for only the current user in webkit-only mode",
-        fileName: "",
-        author: "Storm21CH, idlesauce",
-        projectSource: "",
-        binarySource: "",
-        version: "1.0",
-        customAction: CUSTOM_ACTION_APPCACHE_REMOVE
-    }
+   
+   // {
+   //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove
+   //     displayTitle: "Browser appcache remover",
+    //    description: "Deletes for only the current user in webkit-only mode",
+    //    fileName: "",
+    //    author: "Storm21CH, idlesauce",
+    //    projectSource: "",
+     //   binarySource: "",
+    //    version: "1.0",
+    //    customAction: CUSTOM_ACTION_APPCACHE_REMOVE
+  //  }
 
 ];
