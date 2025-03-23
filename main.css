@@ -210,7 +210,7 @@ a:focus {
 
 .log {
     display: block;
-    flex-direction: column;
+    
     flex-grow: 1;
     unicode-bidi: embed;
     font-family: monospace;
