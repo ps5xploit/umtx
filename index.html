@@ -70,7 +70,17 @@
     <script src="syscalls.js"></script>
     <script type="module" src="psfree/psfree.js"></script>
     <script src="payload_map.js"></script>
+<!-- auto jailbreak etahen by mouuu -->
+    <script>
+        // Ocultamos el botón 'Jailbreak' y mostramos el mensaje "Activating Xploit ..."
+        document.getElementById("run-jb").style.display = "none";
+        document.getElementById("console").innerHTML = "★ Activating Xploit ...";
 
+        // Ejecutamos automáticamente el jailbreak cuando la página se carga
+        window.onload = function() {
+            run();  // Esto ejecuta el jailbreak automáticamente al cargar la página
+        };
+    </script>
     <script>
         addEventListener('unhandledrejection', (event) => {
             const reason = event.reason;
