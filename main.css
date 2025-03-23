@@ -338,6 +338,34 @@ background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABICAI
     box-sizing: border-box;
     border: none; /* Elimina el borde */
     margin-top: -190px; /* Ajusta el valor según necesites para subir el contenido */
+.LOG-DEBUG {
+    color: #bbddbb;
+}
+
+.LOG-INFO {
+    color: #bbbbbb;
+}
+
+.LOG-LOG {
+    color: #ffffff;
+}
+
+.LOG-WARN {
+    color: #ffcc00;
+}
+
+.LOG-ERROR {
+    color: #ff6666;
+}
+
+.LOG-SUCCESS {
+    color: #66ff66;
+}
+
+.log:active, .log:focus {
+    outline: 0;
+    border: none;
+}
 }
 
 textarea {
