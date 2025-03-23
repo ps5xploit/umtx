@@ -208,7 +208,7 @@ a:focus {
     white-space: pre;
     color: var(--text-color-primary);
     background-color: inherit;
-    border: var(--surface-color-primary) 1px solid;
+  
     border-radius: 5px;
     padding: 8px;
     margin: 8px;
