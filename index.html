@@ -72,6 +72,17 @@
     <script src="payload_map.js"></script>
 
 
+<script>
+    // Ocultamos el botón 'Jailbreak' y mostramos el mensaje "Activating Xploit ..."
+    document.getElementById("run-jb").style.display = "none";
+    document.getElementById("console").innerHTML = "★ Activating Xploit ...";
+
+    // Ejecutamos automáticamente el jailbreak cuando la página se carga
+    window.onload = function() {
+        // Simulamos un clic en el botón de Jailbreak
+        document.getElementById("run-jb").click();
+    };
+</script>
 
 
     
