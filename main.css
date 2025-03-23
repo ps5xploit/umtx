@@ -213,20 +213,20 @@ a:focus {
 
 
 .log {
-    display: flex;
-    flex-direction: column;
+    display: block;
     flex-grow: 1;
     unicode-bidi: embed;
     font-family: monospace;
-    white-space: pre;
-    color: var(--text-color-primary);
+    white-space: pre-wrap; /* Asegura que los saltos de línea se respeten y el texto se ajuste */
+    font-size: 25px;
+    color: #fff;
+color: var(--text-color-primary);
     background-color: inherit;
-  
-    border-radius: 5px;
     padding: 8px;
-    margin: 8px;
+   margin-left:30px;
     box-sizing: border-box;
-    overflow-y: auto;
+    border: none; /* Elimina el borde */
+    margin-top: -190px; /* Ajusta el valor según necesites para subir el contenido */
 }
 
 
