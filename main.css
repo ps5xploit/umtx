@@ -338,6 +338,7 @@ background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABICAI
     box-sizing: border-box;
     border: none; /* Elimina el borde */
     margin-top: -190px; /* Ajusta el valor según necesites para subir el contenido */
+}
 .LOG-DEBUG {
     color: #bbddbb;
 }
@@ -366,7 +367,7 @@ background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABICAI
     outline: 0;
     border: none;
 }
-}
+
 
 textarea {
     pointer-events: none; /* Desactiva cualquier interacción con el textarea */
