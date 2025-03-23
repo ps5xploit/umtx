@@ -159,11 +159,15 @@
             );
             throw reason;
         });
-
         document.getElementById("current-fw").innerHTML = fw_str;
-        localStorage.setItem(LOCALSTORE_WK_EXPLOIT_TYPE_KEY, LOCALSTORE_WK_EXPLOIT_TYPE_VALUE_PSFREE);
         registerAppCacheEventHandlers();
         registerL2ButtonHandler();
+        window.onload = function () {
+            let autoload = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
+            if (autoload) {
+                run(autoload == "wkonly", false);
+            }
+        };
     </script>
 </body>
 
