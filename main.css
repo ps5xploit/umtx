@@ -1,3 +1,18 @@
+:root{
+    --text-color-primary: #fff;
+    --text-color-secondary: #ccc;
+    --text-color-tertiary: #999;
+    --background-color-primary: #0c0c0f;
+    --surface-color-primary: #202125;
+    --surface-color-secondary: #15161a;
+    --surface-color-hover: #a2a2a6;
+    --text-color-primary-hover: #202020;
+    --text-color-secondary-hover: #444;
+
+    font-size: 17px;
+}
+
+
 .loader3 {
   margin: auto;
   width: 243px;
