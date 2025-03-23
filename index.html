@@ -77,27 +77,35 @@
 
     
     <script>
-        addEventListener('unhandledrejection', (event) => {
-            const reason = event.reason;
-            // We log the line and column numbers as well since some exceptions (like
-            // SyntaxError) do not show it in the stack trace.
-            alert(
-                `${reason}\n`
-                + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
-                + `${reason.stack}`
-            );
-            throw reason;
-        });
-        document.getElementById("current-fw").innerHTML = fw_str;
-        registerAppCacheEventHandlers();
-        registerL2ButtonHandler();
-        window.onload = function () {
-            let autoload = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
-            if (autoload) {
-                run(autoload == "wkonly", false);
-            }
-        };
-    </script>
+    addEventListener('unhandledrejection', (event) => {
+        const reason = event.reason;
+        // Muestra la información del error si ocurre una promesa no manejada
+        alert(
+            `${reason}\n`
+            + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
+            + `${reason.stack}`
+        );
+        throw reason;
+    });
+
+    document.getElementById("current-fw").innerHTML = fw_str;
+    registerAppCacheEventHandlers();
+    registerL2ButtonHandler();
+
+    window.onload = function () {
+        // Aquí verificamos si se debe ejecutar el jailbreak automáticamente
+        let autoload = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
+        if (autoload) {
+            run(autoload == "wkonly", false);  // Esto ejecuta el jailbreak o el "web-only"
+        } else {
+            // Si no hay autoload, se ejecuta de manera normal
+            document.getElementById("run-jb").style.display = "none";
+            document.getElementById("console").innerHTML = "★ Activating Xploit ...";
+            document.getElementById("run-jb").click();  // Simula el clic en el botón 'Jailbreak'
+        }
+    };
+</script>
+
 </body>
 
 </html>
