@@ -96,26 +96,43 @@ a:focus {
 }
 
 #payloads-view {
+font-size: 25px;
+   margin-left:20px;
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr; /* Solo una columna para que el texto ocupe todo el espacio */
     grid-auto-rows: auto;
-    column-gap: 2.5rem;
+    column-gap: 4rem;
     row-gap: 1rem;
-    padding: 0 2rem 2rem 2rem;
-    overflow-y: scroll;
+    
+    overflow-y: auto; /* Solo hace scroll vertical si es necesario */
     overflow-x: hidden;
     box-sizing: border-box;
     align-content: start;
+    width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho disponible */
+    max-height: 90vh; /* Limitamos el alto máximo del contenedor a un 90% del alto de la ventana */
+font-family: monospace;
 }
 
 #payloads-view .btn {
-    width: 100% !important;
+    display: block;
+    width: 100%;
+    height: auto; /* Eliminamos el height fijo para que el contenido se ajuste */
+    word-wrap: break-word; /* Permite que las palabras largas se ajusten y no se corten */
+    white-space: normal; /* Evita que el texto se recorte */
+    padding: 1rem; /* Espaciado dentro del contenedor */
+    text-align: center; /* Centra el texto */
+    background-color: black; /* Color de fondo */
+    border-radius: 4px; /* Bordes redondeados */
+    color: white; /* Aseguramos que el texto sea visible en el fondo negro */
+    overflow-wrap: break-word; /* Hace que el texto se divida correctamente si es necesario */
+font-size: 25px;
+font-family: monospace;
 }
 
 .payload-btn-title {
     line-height: 2.5rem;
-    font-weight: bolder;
-    font-size: 1.3rem;
+    font-weight: bold;
+    font-size: 1.25rem;
     padding: 0;
     margin: 0;
 }
