@@ -1,13 +1,13 @@
 :root{
-    --text-color-primary: #fff;
-    --text-color-secondary: #ccc;
-    --text-color-tertiary: #999;
-    --background-color-primary: #0c0c0f;
-    --surface-color-primary: #202125;
-    --surface-color-secondary: #15161a;
-    --surface-color-hover: #a2a2a6;
-    --text-color-primary-hover: #202020;
-    --text-color-secondary-hover: #444;
+    --text-color-primary: white;
+    --text-color-secondary: white;
+    --text-color-tertiary: white;
+    --background-color-primary: black;
+    --surface-color-primary: white;
+    --surface-color-secondary: black;
+    --surface-color-hover: white;
+    --text-color-primary-hover: black;
+    --text-color-secondary-hover: black;
 
     font-size: 17px;
 }
@@ -281,11 +281,11 @@ font-family: monospace;
 
 
 .LOG-DEBUG {
-    color: #bbddbb;
+    color: yellow;
 }
 
 .LOG-INFO {
-    color: #bbbbbb;
+    color: white;
 }
 
 .LOG-LOG {
@@ -297,7 +297,7 @@ font-family: monospace;
 }
 
 .LOG-ERROR {
-    color: #ff6666;
+    color: #ffcc00;
 }
 
 .LOG-SUCCESS {
