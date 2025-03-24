@@ -125,75 +125,57 @@ function registerAppCacheEventHandlers() {
 
     if (document.documentElement.hasAttribute("manifest")) {
         if (!navigator.onLine) {
-            createOrUpdateAppCacheToast('Offline.', 2000);
+            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
         } else {
             // this is redundant
-            createOrUpdateAppCacheToast("Checking for updates...");
+            createOrUpdateAppCacheToast("★ Check updates...");
         }
     }
 
     appCache.addEventListener('cached', function (e) {
-        createOrUpdateAppCacheToast('Finished caching site.', 1500);
+        createOrUpdateAppCacheToast('★ Finished caching site', 1500);
     }, false);
 
     appCache.addEventListener('checking', function (e) {
-        createOrUpdateAppCacheToast('Checking for updates...');
+        createOrUpdateAppCacheToast('★ Check updates...');
     }, false);
 
     appCache.addEventListener('downloading', function (e) {
-        createOrUpdateAppCacheToast('Downloading new cache...');
+        createOrUpdateAppCacheToast('★ Downloading cache');
     }, false);
 
     appCache.addEventListener('error', function (e) {
         // only show error toast if we're online
         if (navigator.onLine) {
-            createOrUpdateAppCacheToast('Error while caching site.', 5000);
+            createOrUpdateAppCacheToast('★ Error caching', 5000);
         } else {
-            createOrUpdateAppCacheToast('Offline.', 2000);
+            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
         }
     }, false);
 
     appCache.addEventListener('noupdate', function (e) {
-        createOrUpdateAppCacheToast('Cache is up-to-date.', 1500);
+        createOrUpdateAppCacheToast('★ Cache is up', 1500);
     }, false);
 
     appCache.addEventListener('obsolete', function (e) {
-        createOrUpdateAppCacheToast('Site is obsolete.');
+        createOrUpdateAppCacheToast('★ Site is obsolete');
     }, false);
 
-    appCache.addEventListener('progress', function (e) {
-        let percentage = Math.round((e.loaded / e.total) * 100);
+       appCache.addEventListener('progress', function (e) {
+    let dots = '.'.repeat(Math.min(Math.floor((e.loaded / e.total) * 3), 3)); // Máximo 3 puntos suspensivos
 
-        createOrUpdateAppCacheToast('Downloading new cache... ' + percentage + '%');
+    createOrUpdateAppCacheToast('★ Downloading cache' + dots);
 
-        // the last item takes an unreasonably long time to complete (with a big update)
-        // ig its doing some extra stuff before the last event is fired
-        // so show a new message for it
-        if (e.loaded + 1 == e.total) {
-            createOrUpdateAppCacheToast("Processing... This may take a minute.");
-        }
-    }, false);
+    if (e.loaded + 1 == e.total) {
+        createOrUpdateAppCacheToast("★ Done wait ...");
+    }
+}, false);
 
     appCache.addEventListener('updateready', function (e) {
         if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-            createOrUpdateAppCacheToast('The site was updated. Refresh to switch to updated version');
+            createOrUpdateAppCacheToast('★ Site updated. Refresh');
         }
     }, false);
-}
-
-function registerL2ButtonHandler() {
-    document.addEventListener("keydown", async (event) => {
-        if (event.keyCode === 118) {
-            const lastRedirectorValue = localStorage.getItem(LOCALSTORE_REDIRECTOR_LAST_URL_KEY) || "http://";
-            const redirectorValue = prompt("Enter url", lastRedirectorValue);
-
-            // pressing cancel works as expected, but pressing the back button unfortunately is the same as pressing ok
-            if (redirectorValue && redirectorValue !== "http://") {
-                localStorage.setItem(LOCALSTORE_REDIRECTOR_LAST_URL_KEY, redirectorValue);
-                window.location.href = redirectorValue;
-            }
-        }
-    });
 }
 
 const TOAST_SUCCESS_TIMEOUT = 2000;
@@ -207,7 +189,6 @@ function showToast(message, timeout = 2000) {
 
     toastContainer.appendChild(toast);
 
-    // Trigger reflow to enable animation
     toast.offsetHeight;
 
     toast.classList.add('show');
@@ -238,7 +219,6 @@ async function removeToast(toast) {
     });
 }
 
-
 function populatePayloadsPage(wkOnlyMode = false) {
     const payloadsView = document.getElementById('payloads-view');
 
@@ -246,16 +226,17 @@ function populatePayloadsPage(wkOnlyMode = false) {
         payloadsView.removeChild(payloadsView.firstChild);
     }
 
-    const payloads = payload_map;
+const payloads = payload_map;
 
-    for (const payload of payloads) {
-        if (wkOnlyMode && !payload.toPort && !payload.customAction) {
-            continue;
-        }
+for (const payload of payloads) {
+    if (wkOnlyMode && !payload.toPort && !payload.customAction) {
+        continue;
+    }
 
-        if (payload.supportedFirmwares && !payload.supportedFirmwares.some(fwPrefix => window.fw_str.startsWith(fwPrefix))) {
-            continue;
-        }
+    if (payload.supportedFirmwares && !payload.supportedFirmwares.some(fwPrefix => window.fw_str.startsWith(fwPrefix))) {
+        continue;
+    }
+
  // Comentamos la creación del botón para que no se vea
     /*
     const payloadButton = document.createElement("a");
