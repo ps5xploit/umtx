@@ -808,9 +808,9 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         for (let i2 = 0; i2 < config.max_race_attempts; i2++) {
             if (i2 % 2 == 0) {
                 if (debug) {
-                    await log(`★ [UMTX] Please wait ...\n▶︎ Triggering Race attempt ${i}-${i2} (fail : ${checkMemoryAccessFailCount})`, LogLevel.INFO | LogLevel.FLAG_TEMP);
+                    await log(`Activating xploit Please wait ...\n▶︎ Triggering Race attempt ${i}-${i2} (fail : ${checkMemoryAccessFailCount})`, LogLevel.INFO | LogLevel.FLAG_TEMP);
                 } else {
-                    await log(`★ [UMTX] Please wait ...\n▶︎ Triggering Race attempt ${i}-${i2}`, LogLevel.INFO | LogLevel.FLAG_TEMP);
+                    await log(`Activating xploit Please wait ...\n▶︎ Triggering Race attempt ${i}-${i2}`, LogLevel.INFO | LogLevel.FLAG_TEMP);
                 }
             }
 
