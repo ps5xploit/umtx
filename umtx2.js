@@ -808,9 +808,9 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         for (let i2 = 0; i2 < config.max_race_attempts; i2++) {
             if (i2 % 2 == 0) {
                 if (debug) {
-                    await log(`  Activating Xploit ...\n▶︎ Triggering Race attempt ${i}-${i2} (fail : ${checkMemoryAccessFailCount})`, LogLevel.INFO | LogLevel.FLAG_TEMP);
+                    await log(`    Activating Xploit ...\n▶︎ Triggering Race attempt ${i}-${i2} (fail : ${checkMemoryAccessFailCount})`, LogLevel.INFO | LogLevel.FLAG_TEMP);
                 } else {
-                    await log(`  Activating Xploit ...\n▶︎ Triggering Race attempt ${i}-${i2}`, LogLevel.INFO | LogLevel.FLAG_TEMP);
+                    await log(`    Activating Xploit ...\n▶︎ Triggering Race attempt ${i}-${i2}`, LogLevel.INFO | LogLevel.FLAG_TEMP);
                 }
             }
 
@@ -962,7 +962,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         if (debug) await log(`All kprim threads ready ${config.num_kprim_threads}`, LogLevel.DEBUG);
 
         if (closeRes != 0 || (kstack.low << 0) == -1) {
-            await log("Failed to reclaim kstack. Retrying...", LogLevel.WARN);
+             // await log("Failed to reclaim kstack. Retrying...", LogLevel.WARN);
             if (doInvalidKstackMunmap) {
                 await chain.syscall(SYS_MUNMAP, kstack, 0x4000);
             }
@@ -979,7 +979,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
         const PROT_WRITE = 0x2;
         const mprotectRes = await chain.syscall_int32(SYS_MPROTECT, kstack, 0x4000, PROT_READ | PROT_WRITE);
         if (mprotectRes != 0) {
-            await log("mprotect failed. Retrying...", LogLevel.WARN);
+             // await log("mprotect failed. Retrying...", LogLevel.WARN);
             if (doInvalidKstackMunmap) {
                 await chain.syscall(SYS_MUNMAP, kstack, 0x4000);
             }
@@ -1006,7 +1006,7 @@ async function runUmtx2Exploit(p, chain, log = async () => { }) {
 
         const kprimId = verifyKstack(kstack);
         if (kprimId == null) {
-            await log("Failed to get kprim id from kstack. Retrying..", LogLevel.WARN);
+             // await log("Failed to get kprim id from kstack. Retrying..", LogLevel.WARN);
             if (doInvalidKstackMunmap) {
                 await chain.syscall(SYS_MUNMAP, kstack, 0x4000);
             }
