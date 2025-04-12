@@ -1,6 +1,6 @@
 PS5 XPLOIT HOST auto load etaHEN 2.0b  by @m0ur0ne  
 
-24/03/2025 add new UMTX2 exploit.  thanks to idlsauce 
+12/04/2025 add new UMTX2 exploit.  thanks to idlsauce 
 
 The exploit code is largely based on the lua implementation by @shahrilnet and @n0llptr: https://github.com/shahrilnet/remote_lua_loader/blob/main/payloads/umtx.lua
 
