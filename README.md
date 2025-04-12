@@ -1,6 +1,12 @@
 PS5 XPLOIT HOST auto load etaHEN 2.0b  by @m0ur0ne  
 
 12/04/2025 add new UMTX2 exploit.  thanks to idlsauce 
+🔹Improved Performance and Success Rate
+🔹Reduced latency of calls from ~6ms to ~0.2ms.
+🔹Not yielding before the umtx destroy.
+🔹The exploit now often completes in 1-3 secs (not 10-60 secs)
+
+-----------------------------------------------------
 
 The exploit code is largely based on the lua implementation by @shahrilnet and @n0llptr: https://github.com/shahrilnet/remote_lua_loader/blob/main/payloads/umtx.lua
 
