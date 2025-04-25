@@ -1,5 +1,5 @@
-25/04/2025
-PS5 XPLOIT HOST auto load etaHEN 2.1b  by @m0ur0ne  
+12/04/2025
+PS5 XPLOIT HOST auto load etaHEN 2.0b  by @m0ur0ne  
 
 --------------------------
 
