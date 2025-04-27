@@ -1,4 +1,4 @@
-PS5 XPLOIT HOST umtx2 auto load etaHEN 2.0b  by @m0ur0ne
+PS5 XPLOIT HOST umtx2 auto load etaHEN   by @m0ur0ne
 
 --------------------------
 
