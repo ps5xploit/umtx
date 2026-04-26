@@ -209,13 +209,14 @@ async function removeToast(toast) {
 
 function populatePayloadsPage(wkOnlyMode = false) {
     const payloadsView = document.getElementById('payloads-view');
+    const buttonsContainer = document.getElementById('payloads-buttons-right');
 
     while (payloadsView.firstChild) {
         payloadsView.removeChild(payloadsView.firstChild);
     }
-
-    const oldButtonsContainer = document.getElementById('payloads-buttons-right');
-    if (oldButtonsContainer) oldButtonsContainer.remove();
+    while (buttonsContainer.firstChild) {
+        buttonsContainer.removeChild(buttonsContainer.firstChild);
+    }
 
     const payloads = payload_map;
 
@@ -234,41 +235,32 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.style.pointerEvents = "none";
     debugMessage.style.cursor = "default";
     debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
-
-    // Observar cuando debugMessage entre en el DOM, y solo entonces crear los botones
-    const observer = new MutationObserver(function(mutations, obs) {
-        if (document.body.contains(debugMessage)) {
-            obs.disconnect();
-
-            const buttonsContainer = document.createElement("div");
-            buttonsContainer.id = "payloads-buttons-right";
-            buttonsContainer.style.cssText = "position: fixed; right: 20px; top: 120px; z-index: 9999; text-align: right;";
-            document.body.appendChild(buttonsContainer);
-
-            const backporkButton = document.createElement("a");
-            backporkButton.classList.add("btn", "w-100");
-            backporkButton.tabIndex = 0;
-            backporkButton.style.display = "block";
-            backporkButton.innerHTML = "<p class='payload-btn-title'>BackPork</p><p class='payload-btn-description'>BackPork payload</p><p class='payload-btn-info'>v0.1</p>";
-            backporkButton.addEventListener("click", function () {
-                const payload = payload_map.find(p => p.fileName === "Backpork.elf");
-                if (payload) window.dispatchEvent(new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, { detail: payload }));
-            });
-            buttonsContainer.appendChild(backporkButton);
-
-            const shadowButton = document.createElement("a");
-            shadowButton.classList.add("btn", "w-100");
-            shadowButton.tabIndex = 0;
-            shadowButton.style.display = "block";
-            shadowButton.innerHTML = "<p class='payload-btn-title'>shadowmount</p><p class='payload-btn-description'>shadowmount payload</p><p class='payload-btn-info'>v1.03</p>";
-            shadowButton.addEventListener("click", function () {
-                const payload = payload_map.find(p => p.fileName === "shadowmount.elf");
-                if (payload) window.dispatchEvent(new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, { detail: payload }));
-            });
-            buttonsContainer.appendChild(shadowButton);
-        }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
     payloadsView.appendChild(debugMessage);
+
+    // Botón BackPork
+    const backporkButton = document.createElement("a");
+    backporkButton.classList.add("btn", "w-100");
+    backporkButton.tabIndex = 0;
+    backporkButton.style.display = "block";
+    backporkButton.innerHTML = "<p class='payload-btn-title'>BackPork</p><p class='payload-btn-description'>BackPork payload</p><p class='payload-btn-info'>v0.1</p>";
+    backporkButton.addEventListener("click", function () {
+        const payload = payload_map.find(p => p.fileName === "Backpork.elf");
+        if (payload) window.dispatchEvent(new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, { detail: payload }));
+    });
+    buttonsContainer.appendChild(backporkButton);
+
+    // Botón shadowmount
+    const shadowButton = document.createElement("a");
+    shadowButton.classList.add("btn", "w-100");
+    shadowButton.tabIndex = 0;
+    shadowButton.style.display = "block";
+    shadowButton.innerHTML = "<p class='payload-btn-title'>shadowmount</p><p class='payload-btn-description'>shadowmount payload</p><p class='payload-btn-info'>v1.03</p>";
+    shadowButton.addEventListener("click", function () {
+        const payload = payload_map.find(p => p.fileName === "shadowmount.elf");
+        if (payload) window.dispatchEvent(new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, { detail: payload }));
+    });
+    buttonsContainer.appendChild(shadowButton);
+
+    // Mostrar el contenedor de botones ahora que el debugMessage ya está
+    buttonsContainer.style.display = "block";
 }
