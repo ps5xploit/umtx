@@ -6,90 +6,107 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <style>
-#payloads-buttons-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-}
-
-/* 🔷 BOTÓN HEX */
-#payloads-buttons-right a.btn.w-100 {
-  position: relative;
-  width: 160px;
-  height: 140px;
-  display: block !important;
-  background: transparent !important;
-  border: none !important;
-  color: #0f0;
-  font-family: monospace;
+.btn {
+  padding: 0.2rem 0.5rem;
   text-align: center;
-  padding: 0;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0.2rem 0.1rem;
   cursor: pointer;
+  line-height: 2rem;
+  width: 200px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: black;
+  border: 2px solid #FFFF00;
+  color: #fff;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  outline: none; /* Elimina el contorno en el estado activo y enfocado */
 }
 
-/* evitar que bootstrap o .btn rompa layout */
-#payloads-buttons-right a.btn.w-100 * {
-  pointer-events: none;
+.btn:hover {
+  background-color: #FFFF00;
+  color: #000;
+  animation: shake 0.5s infinite;
 }
 
-/* contenedor hex */
-.hex-btn {
-  position: absolute;
-  inset: 0;
-  transform: rotate(30deg);
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
 }
 
-/* capas hex (igual que tu PoC) */
-.hex-btn .hex {
-  position: absolute;
-  top: 0;
-  left: 25px;
-  width: 110px;
-  height: 140px;
-  opacity: 0.6;
+/* Establece los márgenes para los botones */
+.btn:nth-child(2n) {
+  margin-right: 0;
 }
 
-.hex-btn .hex div {
-  position: absolute;
-  width: 110px;
-  height: 140px;
-  box-sizing: border-box;
+/* Centra el último botón */
+.btn:last-child {
+  margin: 0 auto;
 }
 
-.hex-btn .hex div:before,
-.hex-btn .hex div:after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: #0f0;
+/* Para pantallas más pequeñas, muestra 2 botones en la fila */
+@media (max-width: 768px) {
+  .btn {
+    width: calc(50% - 10px);
+    margin-right: 5px;
+  }
+
+  /* Elimina el margen derecho del segundo botón en cada fila */
+  .btn:nth-child(2n) {
+    margin-right: 0;
+  }
 }
 
-/* líneas top/bottom */
-.hex-btn .hex div:before { top: 0; }
-.hex-btn .hex div:after { bottom: 0; }
 
-/* rotaciones */
-.hex-btn .hex div:nth-child(1) { transform: rotate(0deg); }
-.hex-btn .hex div:nth-child(2) { transform: rotate(60deg); }
-.hex-btn .hex div:nth-child(3) { transform: rotate(120deg); }
 
-/* hover efecto */
-#payloads-buttons-right a.btn.w-100:hover .hex-btn {
-  transform: rotate(30deg) scale(1.15);
-  transition: 0.3s ease;
+.secondary-text {
+    color: #959595;
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 13px;
 }
 
-/* texto encima */
-.hex-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 5;
-  color: #0f0;
+
+.payload-name {
+    line-height: 32px;
+    font-weight: bolder;
+}
+
+
+.payload-description {
+    color: #d1cfcf;
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 22px;
+    font-size: 15px;
+}
+
+.btn:hover p.payload-description {
+    color: #666;
+}
+
+.payload-author {
+    color: #777;
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 0px;
+    font-size: 0px;
+    font-weight:normal;
 }
         a { color: white; text-decoration: none; }
         .Estilo3 { font-size: 24px; }
