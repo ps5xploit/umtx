@@ -208,28 +208,12 @@ function populatePayloadsPage(wkOnlyMode = false) {
     const payloadsView = document.getElementById('payloads-view');
     const buttonsContainer = document.getElementById('payloads-buttons-right');
 
-    // 🧠 Determinar si se deben mostrar payloads
     const storedMode = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
-    const shouldShowPayloads = wkOnlyMode || storedMode === "wkonly";
 
-    // ❌ Si no toca mostrar payloads, limpiamos y salimos
-    if (!shouldShowPayloads) {
-        payloadsView.replaceChildren();
-        buttonsContainer.replaceChildren();
-        buttonsContainer.style.display = "none";
-        payloadsInitialized = false; // importante para cuando vuelva el jailbreak
-        return;
-    }
+    const isWkOnly = wkOnlyMode || storedMode === "wkonly";
 
-    // 🔥 activar UI de payloads
-    buttonsContainer.style.display = "block";
-
-    // 🚨 evitar duplicados SOLO dentro del modo activo
-    if (payloadsInitialized) return;
-    payloadsInitialized = true;
-
+    // 🧠 SIEMPRE mostrar debug tras exploit
     payloadsView.replaceChildren();
-    buttonsContainer.replaceChildren();
 
     const debugMessage = document.createElement("div");
     debugMessage.classList.add("btn");
@@ -238,6 +222,22 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
 
     payloadsView.appendChild(debugMessage);
+
+    // ❌ Si NO es wkOnly → no payloads, pero debug sí
+    if (!isWkOnly) {
+        buttonsContainer.replaceChildren();
+        buttonsContainer.style.display = "none";
+        payloadsInitialized = false;
+        return;
+    }
+
+    // 🟢 WKONLY MODE → mostrar payloads
+    buttonsContainer.style.display = "block";
+
+    if (payloadsInitialized) return;
+    payloadsInitialized = true;
+
+    buttonsContainer.replaceChildren();
 
     const dispatchPayload = (fileName) => {
         const payload = payload_map.find(p => p.fileName === fileName);
@@ -250,25 +250,25 @@ function populatePayloadsPage(wkOnlyMode = false) {
         }
     };
 
-    const backporkButton = document.createElement("a");
-    backporkButton.classList.add("btn", "w-100");
-    backporkButton.tabIndex = 0;
-    backporkButton.style.display = "block";
-    backporkButton.innerHTML =
-        "<p class='payload-btn-title'>BackPork</p><p class='payload-btn-description'>BackPork payload</p><p class='payload-btn-info'>v0.1</p>";
+    const makeBtn = (title, desc, file, ver) => {
+        const btn = document.createElement("a");
+        btn.classList.add("btn", "w-100");
+        btn.tabIndex = 0;
+        btn.style.display = "block";
+        btn.innerHTML = `
+            <p class='payload-btn-title'>${title}</p>
+            <p class='payload-btn-description'>${desc}</p>
+            <p class='payload-btn-info'>${ver}</p>
+        `;
+        btn.onclick = () => dispatchPayload(file);
+        return btn;
+    };
 
-    backporkButton.onclick = () => dispatchPayload("Backpork.elf");
+    buttonsContainer.appendChild(
+        makeBtn("BackPork", "BackPork payload", "Backpork.elf", "v0.1")
+    );
 
-    buttonsContainer.appendChild(backporkButton);
-
-    const shadowButton = document.createElement("a");
-    shadowButton.classList.add("btn", "w-100");
-    shadowButton.tabIndex = 0;
-    shadowButton.style.display = "block";
-    shadowButton.innerHTML =
-        "<p class='payload-btn-title'>shadowmount</p><p class='payload-btn-description'>shadowmount payload</p><p class='payload-btn-info'>v1.03</p>";
-
-    shadowButton.onclick = () => dispatchPayload("shadowmount.elf");
-
-    buttonsContainer.appendChild(shadowButton);
+    buttonsContainer.appendChild(
+        makeBtn("shadowmount", "shadowmount payload", "shadowmount.elf", "v1.03")
+    );
 }
