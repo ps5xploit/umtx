@@ -11,25 +11,31 @@
    BOTONES EN FILAS (2 columnas) - VERSIÓN COMPACTA
    ========================= */
 
-/* Contenedor principal */
+/* Contenedor principal - AHORA CON GRID */
 #payloads-view {
   width: 100% !important;
   max-width: 480px !important;
   margin: 0 auto !important;
   text-align: center !important;
+
+  /* 🔥 NUEVO: Grid para 2 columnas */
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px 12px !important;
+  justify-items: center !important;
 }
 
 /* Botones compactos y elegantes */
 .payload-item {
-  display: inline-block !important;
-  width: calc(50% - 16px) !important;
+  display: flex !important;  /* cambio de inline-block a flex para mejor control */
+  width: 100% !important;   /* ahora ocupa todo el ancho de la columna */
   max-width: 200px !important;
-  min-height: 38px !important;  /* más bajo */
-  margin: 5px 6px !important;
+  min-height: 38px !important;
+  margin: 0 !important;      /* el gap del grid maneja el espacio */
 
   line-height: normal !important;
 
-  padding: 5px 6px !important;  /*  padding más pequeño */
+  padding: 5px 6px !important;
 
   border-radius: 25px !important;
 
@@ -39,7 +45,9 @@
   color: #fff;
 
   text-align: center !important;
-  vertical-align: top !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   transition: all 0.2s ease-in-out !important;
   cursor: pointer;
@@ -98,6 +106,10 @@
 
 /* pantallas pequeñas: 1 columna */
 @media (max-width: 550px) {
+  #payloads-view {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
   .payload-item {
     width: calc(100% - 20px) !important;
     max-width: none !important;
