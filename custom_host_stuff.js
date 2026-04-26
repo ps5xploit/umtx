@@ -1,3 +1,4 @@
+
 // @ts-check
 
 const LOCALSTORE_REDIRECTOR_LAST_URL_KEY = "redirector_last_url";
@@ -5,12 +6,11 @@ const SESSIONSTORE_ON_LOAD_AUTORUN_KEY = "on_load_autorun";
 const MAINLOOP_EXECUTE_PAYLOAD_REQUEST = "mainloop_execute_payload_request";
 
 let exploitStarted = false;
+let payloadsInitialized = false;
 
-/* =========================================================
-   RUN
-========================================================= */
 async function run(wkonly = false, animate = true) {
     if (exploitStarted) return;
+
     exploitStarted = true;
 
     await switchPage("console-view", animate);
@@ -22,7 +22,7 @@ async function run(wkonly = false, animate = true) {
 
     try {
         if (!animate) {
-            await new Promise(r => setTimeout(r, 100));
+            await new Promise((resolve) => setTimeout(resolve, 100));
         }
 
         await run_psfree(fw_str);
@@ -31,7 +31,7 @@ async function run(wkonly = false, animate = true) {
         log("Webkit exploit failed: " + error, LogLevel.ERROR);
         log("Retrying in 2 seconds...", LogLevel.LOG);
 
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         window.location.reload();
         return;
     }
@@ -44,13 +44,13 @@ async function run(wkonly = false, animate = true) {
 }
 
 /* =========================================================
-   SWITCH PAGE
+   SWITCH PAGE (SIN CAMBIOS)
 ========================================================= */
 async function switchPage(id, animate = true) {
     const parentElement = document.getElementById('main-content');
     const targetElement = document.getElementById(id);
 
-    if (!parentElement || !targetElement || targetElement.parentElement !== parentElement) {
+    if (!targetElement || targetElement.parentElement !== parentElement) {
         throw new Error('Invalid target element');
     }
 
@@ -58,9 +58,9 @@ async function switchPage(id, animate = true) {
 
     if (oldSelectedElement) {
         if (animate) {
-            await new Promise(resolve => {
-                oldSelectedElement.addEventListener("transitionend", function handler(e) {
-                    if (e.target === oldSelectedElement) {
+            await new Promise((resolve) => {
+                oldSelectedElement.addEventListener("transitionend", function handler(event) {
+                    if (event.target === oldSelectedElement) {
                         oldSelectedElement.removeEventListener("transitionend", handler);
                         resolve();
                     }
@@ -73,9 +73,9 @@ async function switchPage(id, animate = true) {
     }
 
     if (animate) {
-        await new Promise(resolve => {
-            targetElement.addEventListener("transitionend", function handler(e) {
-                if (e.target === targetElement) {
+        await new Promise((resolve) => {
+            targetElement.addEventListener("transitionend", function handler(event) {
+                if (event.target === targetElement) {
                     targetElement.removeEventListener("transitionend", handler);
                     resolve();
                 }
@@ -88,7 +88,7 @@ async function switchPage(id, animate = true) {
 }
 
 /* =========================================================
-   PAYLOAD UI (FIX REAL DEL REFRESH)
+   🔥 FIX REAL DEL "REFRESH VISUAL"
 ========================================================= */
 function populatePayloadsPage(wkOnlyMode = false) {
 
@@ -97,13 +97,14 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
     if (!payloadsView || !buttonsContainer) return;
 
-    /* 🔥 FIX CRÍTICO: inicializar SOLO UNA VEZ REAL */
-    if (payloadsView.dataset.initialized === "1") return;
-    payloadsView.dataset.initialized = "1";
+    /* 🔴 FIX 1: evitar reinit duplicado */
+    if (payloadsInitialized) return;
+    payloadsInitialized = true;
 
-    /* =========================
-       DEBUG MESSAGE
-    ========================== */
+    /* 🔴 FIX 2: NO replaceChildren (causa repaint fuerte) */
+    payloadsView.innerHTML = "";
+    buttonsContainer.innerHTML = "";
+
     const debugMessage = document.createElement("div");
     debugMessage.className = "btn";
     debugMessage.style.pointerEvents = "none";
@@ -112,12 +113,9 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
     payloadsView.appendChild(debugMessage);
 
-    /* ⚠️ FIX IMPORTANTE: NO display none (causa refresh visual) */
+    /* 🔴 FIX 3: NO display none (provoca reflow fuerte) */
     buttonsContainer.style.visibility = "hidden";
 
-    /* =========================
-       DISPATCH PAYLOAD
-    ========================== */
     const dispatchPayload = (fileName) => {
         const payload = payload_map.find(p => p.fileName === fileName);
         if (!payload) return;
@@ -129,69 +127,27 @@ function populatePayloadsPage(wkOnlyMode = false) {
         );
     };
 
-    /* =========================
-       BOTONES (SIN REBUILD LOOP)
-    ========================== */
+    const backporkButton = document.createElement("a");
+    backporkButton.className = "btn w-100";
+    backporkButton.tabIndex = 0;
+    backporkButton.style.display = "block";
 
-    const createButton = (title, desc, info, file) => {
-        const btn = document.createElement("a");
-        btn.className = "btn w-100";
-        btn.tabIndex = 0;
+    backporkButton.innerHTML =
+        "<p class='payload-btn-title'>BackPork</p><p class='payload-btn-description'>BackPork payload</p><p class='payload-btn-info'>v0.1</p>";
 
-        btn.innerHTML = `
-            <p class='payload-btn-title'>${title}</p>
-            <p class='payload-btn-description'>${desc}</p>
-            <p class='payload-btn-info'>${info}</p>
-        `;
+    backporkButton.onclick = () => dispatchPayload("Backpork.elf");
 
-        btn.onclick = () => dispatchPayload(file);
+    buttonsContainer.appendChild(backporkButton);
 
-        return btn;
-    };
+    const shadowButton = document.createElement("a");
+    shadowButton.className = "btn w-100";
+    shadowButton.tabIndex = 0;
+    shadowButton.style.display = "block";
 
-    /* SOLO UNA VEZ */
-    if (!buttonsContainer.dataset.ready) {
+    shadowButton.innerHTML =
+        "<p class='payload-btn-title'>shadowmount</p><p class='payload-btn-description'>shadowmount payload</p><p class='payload-btn-info'>v1.03</p>";
 
-        buttonsContainer.appendChild(
-            createButton("BackPork", "BackPork payload", "v0.1", "Backpork.elf")
-        );
+    shadowButton.onclick = () => dispatchPayload("shadowmount.elf");
 
-        buttonsContainer.appendChild(
-            createButton("shadowmount", "shadowmount payload", "v1.03", "shadowmount.elf")
-        );
-
-        buttonsContainer.dataset.ready = "1";
-    }
-}
-
-/* =========================================================
-   TOAST (SIN CAMBIOS CRÍTICOS)
-========================================================= */
-function showToast(message, timeout = 2000) {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-
-    toast.className = 'toast';
-    toast.textContent = message;
-
-    container.appendChild(toast);
-
-    toast.offsetHeight;
-    toast.classList.add('show');
-
-    if (timeout > 0) {
-        setTimeout(() => removeToast(toast), timeout);
-    }
-
-    return toast;
-}
-
-async function removeToast(toast) {
-    if (!toast) return;
-
-    toast.classList.add('hide');
-
-    toast.addEventListener('transitionend', () => {
-        toast.remove();
-    });
+    buttonsContainer.appendChild(shadowButton);
 }
