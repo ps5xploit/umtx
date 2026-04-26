@@ -8,29 +8,28 @@
 <style>
 
 /* =========================
-   BOTONES EN 2 COLUMNAS - FLEXBOX
+   BOTONES EN FILAS (2 columnas) - VERSIÓN COMPACTA
    ========================= */
 
-/* Contenedor principal con FLEX */
+/* Contenedor principal */
 #payloads-view {
-  display: flex !important;
-  flex-wrap: wrap !important;  /* permite que los botones pasen a nueva fila */
-  justify-content: center !important;
-  gap: 8px 12px !important;
-  max-width: 500px !important;
+  width: 100% !important;
+  max-width: 480px !important;
   margin: 0 auto !important;
+  text-align: center !important;
 }
 
-/* Cada botón ocupa el 48% del ancho (aproximadamente la mitad) */
+/* Botones compactos y elegantes */
 .payload-item {
-  flex: 0 0 calc(50% - 12px) !important;  /* 🔥 CLAVE: 2 por fila */
-  min-width: 180px !important;
-  min-height: 38px !important;
-  margin: 0 !important;
+  display: inline-block !important;
+  width: calc(50% - 16px) !important;
+  max-width: 200px !important;
+  min-height: 38px !important;  /* más bajo */
+  margin: 5px 6px !important;
 
   line-height: normal !important;
 
-  padding: 5px 6px !important;
+  padding: 5px 6px !important;  /*  padding más pequeño */
 
   border-radius: 25px !important;
 
@@ -40,16 +39,11 @@
   color: #fff;
 
   text-align: center !important;
+  vertical-align: top !important;
 
   transition: all 0.2s ease-in-out !important;
   cursor: pointer;
   overflow: hidden;
-
-  /* alineación interna */
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 /* hover */
@@ -103,11 +97,12 @@
 }
 
 /* pantallas pequeñas: 1 columna */
-/*@media (max-width: 550px) {
+@media (max-width: 550px) {
   .payload-item {
-    flex: 0 0 calc(100% - 20px) !important;
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
   }
-}*/
+}
 
         a { color: white; text-decoration: none; }
         .Estilo3 { font-size: 24px; }
