@@ -213,8 +213,8 @@ function populatePayloadsPage(wkOnlyMode = false) {
     payloadsInitialized = true;
 
     // limpiar SOLO una vez
-  payloadsView.innerHTML = "";
-buttonsContainer.innerHTML = "";
+    payloadsView.replaceChildren();
+    buttonsContainer.replaceChildren();
 
     const debugMessage = document.createElement("div");
     debugMessage.classList.add("btn");
@@ -224,7 +224,7 @@ buttonsContainer.innerHTML = "";
 
     payloadsView.appendChild(debugMessage);
 
-    buttonsContainer.style.visibility = "hidden";
+    buttonsContainer.style.display = "none";
 
     // helper para evitar listeners duplicados
     const dispatchPayload = (fileName) => {
