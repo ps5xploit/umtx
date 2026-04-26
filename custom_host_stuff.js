@@ -208,11 +208,26 @@ function populatePayloadsPage(wkOnlyMode = false) {
     const payloadsView = document.getElementById('payloads-view');
     const buttonsContainer = document.getElementById('payloads-buttons-right');
 
-    // 🚨 FIX CRÍTICO: evitar reconstrucción múltiple (causa del “refresh”)
+    // 🧠 Determinar si se deben mostrar payloads
+    const storedMode = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
+    const shouldShowPayloads = wkOnlyMode || storedMode === "wkonly";
+
+    // ❌ Si no toca mostrar payloads, limpiamos y salimos
+    if (!shouldShowPayloads) {
+        payloadsView.replaceChildren();
+        buttonsContainer.replaceChildren();
+        buttonsContainer.style.display = "none";
+        payloadsInitialized = false; // importante para cuando vuelva el jailbreak
+        return;
+    }
+
+    // 🔥 activar UI de payloads
+    buttonsContainer.style.display = "block";
+
+    // 🚨 evitar duplicados SOLO dentro del modo activo
     if (payloadsInitialized) return;
     payloadsInitialized = true;
 
-    // limpiar SOLO una vez
     payloadsView.replaceChildren();
     buttonsContainer.replaceChildren();
 
@@ -224,9 +239,6 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
     payloadsView.appendChild(debugMessage);
 
-    buttonsContainer.style.display = "none";
-
-    // helper para evitar listeners duplicados
     const dispatchPayload = (fileName) => {
         const payload = payload_map.find(p => p.fileName === fileName);
         if (payload) {
