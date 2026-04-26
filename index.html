@@ -8,45 +8,25 @@
 <style>
 
 /* =========================
-   BOTONES EN FILAS (2 columnas) - VERSIÓN COMPACTA
+   SOLO BOTONES - ESTILOS (sin grid en CSS)
    ========================= */
 
-/* Contenedor principal */
-#payloads-view {
-  width: 100% !important;
-  max-width: 280px !important;
-  margin: 0 auto !important;
-  text-align: center !important;
-}
-
-/* Botones compactos y elegantes */
 .payload-item {
-  display: inline-block !important;
-  width: calc(50% - 16px) !important;
-  max-width: 200px !important;
-  min-height: 32px !important;  /* más bajo */
-  margin: 5px 6px !important;
-
-  line-height: normal !important;
-
-  padding: 5px 6px !important;  /*  padding más pequeño */
-
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 38px !important;
+  padding: 5px 6px !important;
   border-radius: 25px !important;
-
   background-color: #0a0a0a !important;
   border: 1.5px solid #FFFF00 !important;
-
-  color: #fff;
-
+  color: #fff !important;
   text-align: center !important;
-  vertical-align: top !important;
-
   transition: all 0.2s ease-in-out !important;
   cursor: pointer;
-  overflow: hidden;
 }
 
-/* hover */
 .payload-item:hover {
   background-color: #FFFF00 !important;
   color: #000 !important;
@@ -54,39 +34,28 @@
   animation: shake 0.4s infinite;
 }
 
-/* textos */
 .payload-item p {
   margin: 0;
   padding: 0;
   line-height: 1.15;
-  width: 100%;
-  text-align: center;
 }
 
-/* título */
 .payload-item .payload-btn-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
-  letter-spacing: 0.3px;
 }
 
-/* descripción */
 .payload-item .payload-btn-description {
   font-size: 9px;
   opacity: 0.8;
-  white-space: normal !important;
-  margin-top: 1px;
 }
 
-/* versión */
 .payload-item .payload-btn-info {
   font-size: 8px;
   opacity: 0.5;
-  margin-top: 1px;
   font-family: monospace;
 }
 
-/* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   20% { transform: translateX(-3px); }
@@ -94,14 +63,6 @@
   60% { transform: translateX(-3px); }
   80% { transform: translateX(3px); }
   100% { transform: translateX(0); }
-}
-
-/* pantallas pequeñas: 1 columna */
-@media (max-width: 550px) {
-  .payload-item {
-    width: calc(100% - 20px) !important;
-    max-width: none !important;
-  }
 }
 
         a { color: white; text-decoration: none; }
@@ -212,8 +173,8 @@
             <div id="console" class="log" style="position: relative; left: 0; margin-left: 0; padding-left: 0;"></div>
         </div>
 
-        <div id="payloads-view" style="position: fixed; left: 20px;text-align: left; margin: 0; padding: 10px 20px; z-index: 9999; height: auto; width: auto;top: 120px;">
-        </div>
+        <div id="payloads-view" style="position: relative; margin: 20px auto; padding: 10px; z-index: 9999; height: auto; width: 90%; max-width: 500px; text-align: center; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+</div>
     </div>
 
     <!-- fuera del main-content -->
