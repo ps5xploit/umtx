@@ -1,8 +1,8 @@
-PS5 XPLOIT HOST umtx2 auto load etaHEN   by @m0ur0ne
+PS5 XPLOIT HOST umtx2 auto load etaHEN  +payloads  by @m0ur0ne
 
 --------------------------
 
-25/12/2025 add new etaHEN 2.5b
+26/04/2026 add payloads
 
 --------------------------
 
