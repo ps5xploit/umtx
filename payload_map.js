@@ -108,6 +108,28 @@ const payload_map = [
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
+    {
+        displayTitle: "App dumper",
+        description: "App dumper",
+        fileName: "ps5-app-dumper.elf",
+        author: "App dumper",
+        projectSource: "App dumper",
+        binarySource: "App dumper",
+        version: "v1.09",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
+    {
+        displayTitle: "np fake signin",
+        description: "np fake signin",
+        fileName: "np-fake-signin-ps5.elf",
+        author: "np fake signin",
+        projectSource: "np fake signin",
+        binarySource: "np fake signin",
+        version: "v1.1",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
 
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove

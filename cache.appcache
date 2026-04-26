@@ -2,6 +2,8 @@ CACHE MANIFEST
 # Generated on 25/12/2025 uodate add etahen 2.5b kstuff 10.01 full  is UMTX2 h 21:19 #
 
 index.html
+payloads\np-fake-signin-ps5.elf
+payloads\ps5-app-dumper.elf
 payloads\ps5debug_v1.0b5.elf
 payloads\Websrv0.29.elf
 payloads\ftp1.15.elf

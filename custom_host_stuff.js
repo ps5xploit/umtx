@@ -283,7 +283,9 @@ function populatePayloadsPage(wkOnlyMode = false) {
         btn.onclick = () => dispatchPayload(file);
         return btn;
     };
-
+    buttonsContainer.appendChild(
+        makeBtn("App dumper", "v1.09", "ps5-app-dumper.elf", "")
+    );
     buttonsContainer.appendChild(
         makeBtn("BackPork", "v0.1", "Backpork.elf", "")
     );
@@ -302,5 +304,8 @@ function populatePayloadsPage(wkOnlyMode = false) {
     );
     buttonsContainer.appendChild(
         makeBtn("Websrv", " v0.29", "Websrv0.29.elf", "")
+    );
+    buttonsContainer.appendChild(
+        makeBtn("np fake signin", " v1.1", "np-fake-signin-ps5.elf", "")
     );
 }
