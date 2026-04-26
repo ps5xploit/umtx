@@ -272,7 +272,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
     const makeBtn = (title, desc, file, ver) => {
         const btn = document.createElement("a");
-        btn.classList.add("btn", "w-100");
+      btn.classList.add("btn", "w-100", "payload-item");
         btn.tabIndex = 0;
         btn.style.display = "block";
         btn.innerHTML = `

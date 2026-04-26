@@ -6,107 +6,59 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <style>
-.btn {
-  padding: 0.2rem 0.5rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 0.2rem 0.1rem;
-  cursor: pointer;
-  line-height: 2rem;
-  width: 200px;
-  height: 30px;
-  border-radius: 15px;
-  background-color: black;
-  border: 2px solid #FFFF00;
+
+/* =========================
+   SOLO BOTONES makeBtn
+   ========================= */
+
+.payload-item {
+  height: auto !important;       /* rompe el 30px fijo */
+  width: 220px !important;
+  min-height: 70px;
+  line-height: normal !important;
+
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 10px 12px !important;
+
+  border-radius: 10px !important;
+
+  background-color: black !important;
+  border: 2px solid #FFFF00 !important;
+
   color: #fff;
-  font-size: 16px;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-  outline: none; /* Elimina el contorno en el estado activo y enfocado */
+  text-align: left !important;
+
+  overflow: hidden;
 }
 
-.btn:hover {
-  background-color: #FFFF00;
-  color: #000;
+/* hover SOLO payload buttons */
+.payload-item:hover {
+  background-color: #FFFF00 !important;
+  color: #000 !important;
   animation: shake 0.5s infinite;
 }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
-  100% { transform: translateX(0); }
+/* texto dentro */
+.payload-item p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
 }
 
-/* Establece los márgenes para los botones */
-.btn:nth-child(2n) {
-  margin-right: 0;
+/* descripción mejor comportamiento */
+.payload-item .payload-description {
+  white-space: normal !important;
+  overflow: hidden;
+  font-size: 14px;
 }
 
-/* Centra el último botón */
-.btn:last-child {
-  margin: 0 auto;
-}
-
-/* Para pantallas más pequeñas, muestra 2 botones en la fila */
-@media (max-width: 768px) {
-  .btn {
-    width: calc(50% - 10px);
-    margin-right: 5px;
-  }
-
-  /* Elimina el margen derecho del segundo botón en cada fila */
-  .btn:nth-child(2n) {
-    margin-right: 0;
-  }
-}
-
-
-
-.secondary-text {
-    color: #959595;
-    margin: 0;
-    padding: 0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 13px;
-}
-
-
-.payload-name {
-    line-height: 32px;
-    font-weight: bolder;
-}
-
-
-.payload-description {
-    color: #d1cfcf;
-    margin: 0;
-    padding: 0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    line-height: 22px;
-    font-size: 15px;
-}
-
-.btn:hover p.payload-description {
-    color: #666;
-}
-
-.payload-author {
-    color: #777;
-    margin: 0;
-    padding: 0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    line-height: 0px;
-    font-size: 0px;
-    font-weight:normal;
+/* evita que el global aplaste el layout */
+.payload-item:nth-child(2n),
+.payload-item:last-child {
+  margin: 0.2rem 0.1rem !important;
 }
         a { color: white; text-decoration: none; }
         .Estilo3 { font-size: 24px; }
