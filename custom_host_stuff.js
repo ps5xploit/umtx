@@ -237,6 +237,9 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
     payloadsView.appendChild(debugMessage);
 
+    // Ocultar botones hasta que el debugMessage esté renderizado en pantalla
+    buttonsContainer.style.display = "none";
+
     // Botón BackPork
     const backporkButton = document.createElement("a");
     backporkButton.classList.add("btn", "w-100");
@@ -261,6 +264,10 @@ function populatePayloadsPage(wkOnlyMode = false) {
     });
     buttonsContainer.appendChild(shadowButton);
 
-    // Mostrar el contenedor de botones ahora que el debugMessage ya está
-    buttonsContainer.style.display = "block";
+    // Mostrar los botones solo después de que el debugMessage haya sido pintado en pantalla
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            buttonsContainer.style.display = "block";
+        });
+    });
 }
