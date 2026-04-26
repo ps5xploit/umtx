@@ -285,16 +285,16 @@ function populatePayloadsPage(wkOnlyMode = false) {
     };
 
     buttonsContainer.appendChild(
-        makeBtn("BackPork", "", "Backpork.elf", "v0.1")
+        makeBtn("BackPork v0.1", "", "Backpork.elf", "")
     );
 
     buttonsContainer.appendChild(
-        makeBtn("shadowmount", "", "shadowmount.elf", "v1.03")
+        makeBtn("Shadow Mount v1.03", "", "shadowmount.elf", "")
     );
     buttonsContainer.appendChild(
-        makeBtn("Cache Remover", "", "cache-remover.elf", "v1.02")
+        makeBtn("Cache Removed v1.02", "", "cache-remover.elf", "")
     );
     buttonsContainer.appendChild(
-        makeBtn("FTP", "", "ftp1.15.elf", "v1.15")
+        makeBtn("FTP v1.15", "", "ftp1.15.elf", "")
     );
 }
