@@ -8,42 +8,51 @@
 <style>
 
 /* =========================
-   BOTONES - 2 COLUMNAS FIJO
+   BOTONES EN 2 COLUMNAS - FLEXBOX
    ========================= */
 
-/* Fuerza el contenedor con grid */
+/* Contenedor principal con FLEX */
 #payloads-view {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;  /* 🔥 2 columnas fijas */
-  gap: 10px !important;
-  width: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;  /* permite que los botones pasen a nueva fila */
+  justify-content: center !important;
+  gap: 8px 12px !important;
   max-width: 500px !important;
   margin: 0 auto !important;
-  position: relative !important;
-  z-index: 10 !important;
 }
 
-/* Botones - ocupan su columna */
+/* Cada botón ocupa el 48% del ancho (aproximadamente la mitad) */
 .payload-item {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-
+  flex: 0 0 calc(50% - 12px) !important;  /* 🔥 CLAVE: 2 por fila */
+  min-width: 180px !important;
   min-height: 38px !important;
+  margin: 0 !important;
+
+  line-height: normal !important;
+
   padding: 5px 6px !important;
+
   border-radius: 25px !important;
+
   background-color: #0a0a0a !important;
   border: 1.5px solid #FFFF00 !important;
-  color: #fff !important;
+
+  color: #fff;
+
   text-align: center !important;
 
   transition: all 0.2s ease-in-out !important;
   cursor: pointer;
-  width: auto !important;
-  margin: 0 !important;
+  overflow: hidden;
+
+  /* alineación interna */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+/* hover */
 .payload-item:hover {
   background-color: #FFFF00 !important;
   color: #000 !important;
@@ -51,28 +60,39 @@
   animation: shake 0.4s infinite;
 }
 
+/* textos */
 .payload-item p {
   margin: 0;
   padding: 0;
   line-height: 1.15;
+  width: 100%;
+  text-align: center;
 }
 
+/* título */
 .payload-item .payload-btn-title {
   font-size: 18px;
   font-weight: bold;
+  letter-spacing: 0.3px;
 }
 
+/* descripción */
 .payload-item .payload-btn-description {
   font-size: 9px;
   opacity: 0.8;
+  white-space: normal !important;
+  margin-top: 1px;
 }
 
+/* versión */
 .payload-item .payload-btn-info {
   font-size: 8px;
   opacity: 0.5;
+  margin-top: 1px;
   font-family: monospace;
 }
 
+/* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   20% { transform: translateX(-3px); }
@@ -81,6 +101,13 @@
   80% { transform: translateX(3px); }
   100% { transform: translateX(0); }
 }
+
+/* pantallas pequeñas: 1 columna */
+/*@media (max-width: 550px) {
+  .payload-item {
+    flex: 0 0 calc(100% - 20px) !important;
+  }
+}*/
 
         a { color: white; text-decoration: none; }
         .Estilo3 { font-size: 24px; }
