@@ -264,10 +264,5 @@ function populatePayloadsPage(wkOnlyMode = false) {
     });
     buttonsContainer.appendChild(shadowButton);
 
-    // Mostrar los botones solo después de que el debugMessage haya sido pintado en pantalla
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            buttonsContainer.style.display = "block";
-        });
-    });
+    // Los botones se muestran desde exploit.js tras switchPage("payloads-view")
 }
