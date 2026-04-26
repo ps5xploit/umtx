@@ -11,8 +11,11 @@
    SOLO BOTONES makeBtn (FINAL) - CON GRID 2 COLUMNAS
    ========================= */
 
-/* Contenedor padre de los botones (grid de 2 columnas) */
-#payloads-view {
+/* Fuerza el grid en CUALQUIER contenedor que tenga payload-items dentro */
+#payloads-view,
+#payloads-view > div,
+#payloads-view > div:first-child,
+div:has(> .payload-item) {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
   gap: 12px !important;
@@ -22,8 +25,8 @@
 
 .payload-item {
   height: auto !important;
-  width: 100% !important;  /* 🔥 cambio: antes 220px fijo, ahora ocupa el ancho de la columna */
-  max-width: 220px !important; /* opcional: mantiene un máximo */
+  width: 100% !important;
+  max-width: 220px !important;
   min-height: 55px;
 
   line-height: normal !important;
@@ -31,7 +34,7 @@
   display: flex !important;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* 🔥 centra horizontal + vertical */
+  align-items: center;
 
   padding: 8px 10px !important;
 
@@ -42,7 +45,7 @@
 
   color: #fff;
 
-  text-align: center !important; /* 🔥 centrado texto */
+  text-align: center !important;
 
   overflow: hidden;
 }
@@ -60,7 +63,7 @@
   padding: 0;
   line-height: 1.1;
   width: 100%;
-  text-align: center; /* 🔥 asegura centrado real */
+  text-align: center;
 }
 
 /* título */
@@ -82,13 +85,7 @@
   opacity: 0.6;
 }
 
-/* spacing grid - ya no es necesario porque el grid maneja el espacio */
-/* .payload-item:nth-child(2n),
-.payload-item:last-child {
-  margin: 0.25rem 0.1rem !important;
-} */
-
-/* shake animation (la mantienes igual) */
+/* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   20% { transform: translateX(-5px); }
