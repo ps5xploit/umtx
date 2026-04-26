@@ -8,45 +8,49 @@
 <style>
 
 /* =========================
-   BOTONES EN FILAS (2 columnas) - VERSIÓN COMPACTA
+   BOTONES - 2 COLUMNAS (FORZADO)
    ========================= */
 
-/* Contenedor principal */
+/* Anula los estilos inline problemáticos */
 #payloads-view {
+  position: relative !important;  /* 🔥 cambia fixed a relative */
+  left: auto !important;         /* 🔥 anula left:20px */
+  right: auto !important;
+  top: auto !important;          /* 🔥 anula top:120px */
+  text-align: center !important; /* 🔥 cambia left a center */
+
+  /* Grid para 2 columnas */
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
   width: 100% !important;
-  max-width: 480px !important;
-  margin: 0 auto !important;
-  text-align: center !important;
+  max-width: 500px !important;
+  margin: 20px auto !important;
+  padding: 10px !important;
+  z-index: 10 !important;
 }
 
-/* Botones compactos y elegantes */
+/* Botones */
 .payload-item {
-  display: inline-block !important;
-  width: calc(50% - 16px) !important;
-  max-width: 200px !important;
-  min-height: 38px !important;  /* más bajo */
-  margin: 5px 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
 
-  line-height: normal !important;
-
-  padding: 5px 6px !important;  /*  padding más pequeño */
-
+  min-height: 38px !important;
+  padding: 5px 6px !important;
   border-radius: 25px !important;
-
   background-color: #0a0a0a !important;
   border: 1.5px solid #FFFF00 !important;
-
-  color: #fff;
-
+  color: #fff !important;
   text-align: center !important;
-  vertical-align: top !important;
 
   transition: all 0.2s ease-in-out !important;
   cursor: pointer;
-  overflow: hidden;
+  width: 100% !important;
+  margin: 0 !important;
 }
 
-/* hover */
 .payload-item:hover {
   background-color: #FFFF00 !important;
   color: #000 !important;
@@ -54,39 +58,28 @@
   animation: shake 0.4s infinite;
 }
 
-/* textos */
 .payload-item p {
   margin: 0;
   padding: 0;
   line-height: 1.15;
-  width: 100%;
-  text-align: center;
 }
 
-/* título */
 .payload-item .payload-btn-title {
   font-size: 18px;
   font-weight: bold;
-  letter-spacing: 0.3px;
 }
 
-/* descripción */
 .payload-item .payload-btn-description {
   font-size: 9px;
   opacity: 0.8;
-  white-space: normal !important;
-  margin-top: 1px;
 }
 
-/* versión */
 .payload-item .payload-btn-info {
   font-size: 8px;
   opacity: 0.5;
-  margin-top: 1px;
   font-family: monospace;
 }
 
-/* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   20% { transform: translateX(-3px); }
@@ -96,11 +89,10 @@
   100% { transform: translateX(0); }
 }
 
-/* pantallas pequeñas: 1 columna */
+/* móvil */
 @media (max-width: 550px) {
-  .payload-item {
-    width: calc(100% - 20px) !important;
-    max-width: none !important;
+  #payloads-view {
+    grid-template-columns: 1fr !important;
   }
 }
 
