@@ -209,29 +209,35 @@ function populatePayloadsPage(wkOnlyMode = false) {
     const buttonsContainer = document.getElementById('payloads-buttons-right');
 
     const storedMode = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
-
     const isWkOnly = wkOnlyMode || storedMode === "wkonly";
 
-    // 🧠 SIEMPRE mostrar debug tras exploit
     payloadsView.replaceChildren();
 
     const debugMessage = document.createElement("div");
     debugMessage.classList.add("btn");
     debugMessage.style.pointerEvents = "none";
     debugMessage.style.cursor = "default";
-    debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
 
-    payloadsView.appendChild(debugMessage);
-
-    // ❌ Si NO es wkOnly → no payloads, pero debug sí
+    // 🟡 ESTADO 1: aún no listo para payloads
     if (!isWkOnly) {
+        debugMessage.innerHTML =
+            "★ Debug Settings Ready ✓<br>Exit and Return to send payloads";
+
+        payloadsView.appendChild(debugMessage);
+
         buttonsContainer.replaceChildren();
         buttonsContainer.style.display = "none";
+
         payloadsInitialized = false;
         return;
     }
 
-    // 🟢 WKONLY MODE → mostrar payloads
+    // 🟢 ESTADO 2: payloads disponibles
+    debugMessage.innerHTML =
+        "★ Debug Settings Ready ✓<br>Waiting payload";
+
+    payloadsView.appendChild(debugMessage);
+
     buttonsContainer.style.display = "block";
 
     if (payloadsInitialized) return;
