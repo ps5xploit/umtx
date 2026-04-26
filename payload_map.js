@@ -86,6 +86,28 @@ const payload_map = [
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
+    {
+        displayTitle: "ps5debug",
+        description: "ps5debug",
+        fileName: "ps5debug_v1.0b5.elf",
+        author: "ps5debug",
+        projectSource: "ps5debug",
+        binarySource: "ps5debug",
+        version: "v1.0b5",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
+    {
+        displayTitle: "Websrv",
+        description: "Websrv",
+        fileName: "Websrv0.29.elf",
+        author: "Websrv",
+        projectSource: "Websrv",
+        binarySource: "Websrv",
+        version: "v0.29",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
 
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove

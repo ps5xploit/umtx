@@ -297,4 +297,10 @@ function populatePayloadsPage(wkOnlyMode = false) {
     buttonsContainer.appendChild(
         makeBtn("FTP Server", " v1.15", "ftp1.15.elf", "")
     );
+    buttonsContainer.appendChild(
+        makeBtn("PS5Debug", " v1.0b5", "ps5debug_v1.0b5.elf", "")
+    );
+    buttonsContainer.appendChild(
+        makeBtn("Websrv", " v0.29", "Websrv0.29.elf", "")
+    );
 }
