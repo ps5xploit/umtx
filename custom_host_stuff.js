@@ -229,18 +229,10 @@ function populatePayloadsPage(wkOnlyMode = false) {
         }
     }
 
-    // Mensaje de estado fijo a la izquierda (donde siempre estuvo)
-    const debugMessage = document.createElement("div");
-    debugMessage.classList.add("btn");
-    debugMessage.style.pointerEvents = "none";
-    debugMessage.style.cursor = "default";
-    debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
-    payloadsView.appendChild(debugMessage);
-
-    // Contenedor de botones fijo a la derecha
+    // Contenedor de botones fijo a la derecha, oculto por defecto
     const buttonsContainer = document.createElement("div");
     buttonsContainer.id = "payloads-buttons-right";
-    buttonsContainer.style.cssText = "position: fixed; right: 20px; top: 120px; z-index: 9999; text-align: right;";
+    buttonsContainer.style.cssText = "position: fixed; right: 20px; top: 120px; z-index: 9999; text-align: right; display: none;";
     document.body.appendChild(buttonsContainer);
 
     // Botón BackPork
@@ -266,4 +258,15 @@ function populatePayloadsPage(wkOnlyMode = false) {
         if (payload) window.dispatchEvent(new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, { detail: payload }));
     });
     buttonsContainer.appendChild(shadowButton);
+
+    // Mensaje de estado fijo a la izquierda, muestra los botones al aparecer
+    const debugMessage = document.createElement("div");
+    debugMessage.classList.add("btn");
+    debugMessage.style.pointerEvents = "none";
+    debugMessage.style.cursor = "default";
+    debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
+    payloadsView.appendChild(debugMessage);
+
+    // Mostrar botones cuando aparece el mensaje
+    buttonsContainer.style.display = "block";
 }
