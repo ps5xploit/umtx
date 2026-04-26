@@ -8,28 +8,31 @@
 <style>
 
 /* =========================
-   SOLO BOTONES makeBtn
+   SOLO BOTONES makeBtn (FINAL)
    ========================= */
 
 .payload-item {
-  height: auto !important;       /* rompe el 30px fijo */
+  height: auto !important;
   width: 220px !important;
-  min-height: 70px;
+  min-height: 55px;
+
   line-height: normal !important;
 
   display: flex !important;
   flex-direction: column;
   justify-content: center;
+  align-items: center; /* 🔥 centra horizontal + vertical */
 
-  padding: 10px 12px !important;
+  padding: 8px 10px !important;
 
-  border-radius: 10px !important;
+  border-radius: 18px !important;
 
   background-color: black !important;
   border: 2px solid #FFFF00 !important;
 
   color: #fff;
-  text-align: left !important;
+
+  text-align: center !important; /* 🔥 centrado texto */
 
   overflow: hidden;
 }
@@ -38,27 +41,51 @@
 .payload-item:hover {
   background-color: #FFFF00 !important;
   color: #000 !important;
-  animation: shake 0.5s infinite;
+  animation: shake 0.4s infinite;
 }
 
-/* texto dentro */
+/* texto base */
 .payload-item p {
   margin: 0;
   padding: 0;
-  line-height: 1.2;
+  line-height: 1.1;
+  width: 100%;
+  text-align: center; /* 🔥 asegura centrado real */
 }
 
-/* descripción mejor comportamiento */
-.payload-item .payload-description {
+/* título */
+.payload-item .payload-btn-title {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* descripción */
+.payload-item .payload-btn-description {
+  font-size: 11px;
+  opacity: 0.85;
   white-space: normal !important;
-  overflow: hidden;
-  font-size: 14px;
 }
 
-/* evita que el global aplaste el layout */
+/* versión */
+.payload-item .payload-btn-info {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+/* spacing grid */
 .payload-item:nth-child(2n),
 .payload-item:last-child {
-  margin: 0.2rem 0.1rem !important;
+  margin: 0.25rem 0.1rem !important;
+}
+
+/* shake animation (la mantienes igual) */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
 }
         a { color: white; text-decoration: none; }
         .Estilo3 { font-size: 24px; }
