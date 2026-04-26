@@ -285,10 +285,10 @@ function populatePayloadsPage(wkOnlyMode = false) {
     };
 
     buttonsContainer.appendChild(
-        makeBtn("BackPork", "BackPork payload", "Backpork.elf", "v0.1")
+        makeBtn("BackPork", "", "Backpork.elf", "v0.1")
     );
 
     buttonsContainer.appendChild(
-        makeBtn("shadowmount", "shadowmount payload", "shadowmount.elf", "v1.03")
+        makeBtn("shadowmount", "", "shadowmount.elf", "v1.03")
     );
 }
