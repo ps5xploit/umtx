@@ -75,6 +75,18 @@ const payload_map = [
         toPort: 9021
     },
 
+    {
+        displayTitle: "FTP",
+        description: "FTP",
+        fileName: "ftp1.15.elf",
+        author: "FTP",
+        projectSource: "FTP",
+        binarySource: "FTP",
+        version: "1.15",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
+
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove
     //     displayTitle: "Browser appcache remover",
