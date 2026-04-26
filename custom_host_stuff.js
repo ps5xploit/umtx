@@ -295,6 +295,6 @@ function populatePayloadsPage(wkOnlyMode = false) {
         makeBtn("Cache Removed v1.02", "", "cache-remover.elf", "")
     );
     buttonsContainer.appendChild(
-        makeBtn("FTP v1.15", "", "ftp1.15.elf", "")
+        makeBtn("FTP Server v1.15", "", "ftp1.15.elf", "")
     );
 }
