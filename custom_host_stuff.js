@@ -1,4 +1,4 @@
- // @ts-check
+// @ts-check
 
 const LOCALSTORE_REDIRECTOR_LAST_URL_KEY = "redirector_last_url";
 const SESSIONSTORE_ON_LOAD_AUTORUN_KEY = "on_load_autorun";
@@ -6,7 +6,11 @@ const MAINLOOP_EXECUTE_PAYLOAD_REQUEST = "mainloop_execute_payload_request";
 
 let exploitStarted = false;
 
-// 🚨 FIX: evitar múltiples inicializaciones de payload UI
+/**
+ * ⚠️ FIX IMPORTANTE:
+ * Antes: bloque global (rompía re-entradas)
+ * Ahora: depende del modo wkOnly
+ */
 let payloadsInitialized = false;
 
 async function run(wkonly = false, animate = true) {
@@ -23,7 +27,7 @@ async function run(wkonly = false, animate = true) {
 
     try {
         if (!animate) {
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await new Promise((r) => setTimeout(r, 100));
         }
 
         await run_psfree(fw_str);
@@ -32,8 +36,7 @@ async function run(wkonly = false, animate = true) {
         log("Webkit exploit failed: " + error, LogLevel.ERROR);
         log("Retrying in 2 seconds...", LogLevel.LOG);
 
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
+        await new Promise((r) => setTimeout(r, 2000));
         window.location.reload();
         return;
     }
@@ -60,8 +63,8 @@ async function switchPage(id, animate = true) {
     if (oldSelectedElement) {
         if (animate) {
             await new Promise((resolve) => {
-                oldSelectedElement.addEventListener("transitionend", function handler(event) {
-                    if (event.target === oldSelectedElement) {
+                oldSelectedElement.addEventListener("transitionend", function handler(e) {
+                    if (e.target === oldSelectedElement) {
                         oldSelectedElement.removeEventListener("transitionend", handler);
                         resolve();
                     }
@@ -80,8 +83,8 @@ async function switchPage(id, animate = true) {
 
     if (animate) {
         await new Promise((resolve) => {
-            targetElement.addEventListener("transitionend", function handler(event) {
-                if (event.target === targetElement) {
+            targetElement.addEventListener("transitionend", function handler(e) {
+                if (e.target === targetElement) {
                     targetElement.removeEventListener("transitionend", handler);
                     resolve();
                 }
@@ -96,78 +99,6 @@ async function switchPage(id, animate = true) {
         targetElement.offsetHeight;
         targetElement.style.removeProperty('transition');
     }
-}
-
-function registerAppCacheEventHandlers() {
-    var appCache = window.applicationCache;
-
-    let toast;
-
-    function createOrUpdateAppCacheToast(message, timeout = -1) {
-        if (!toast) {
-            toast = showToast(message, timeout);
-        } else {
-            updateToastMessage(toast, message);
-        }
-
-        if (timeout > 0) {
-            setTimeout(() => {
-                removeToast(toast);
-                toast = null;
-            }, timeout);
-        }
-    }
-
-    if (document.documentElement.hasAttribute("manifest")) {
-        if (!navigator.onLine) {
-            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
-        } else {
-            createOrUpdateAppCacheToast("★ Check updates...");
-        }
-    }
-
-    appCache.addEventListener('cached', () => {
-        createOrUpdateAppCacheToast('★ Finished caching site', 1500);
-    });
-
-    appCache.addEventListener('checking', () => {
-        createOrUpdateAppCacheToast('★ Check updates...');
-    });
-
-    appCache.addEventListener('downloading', () => {
-        createOrUpdateAppCacheToast('★ Downloading cache');
-    });
-
-    appCache.addEventListener('error', () => {
-        if (navigator.onLine) {
-            createOrUpdateAppCacheToast('★ Error caching', 5000);
-        } else {
-            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
-        }
-    });
-
-    appCache.addEventListener('noupdate', () => {
-        createOrUpdateAppCacheToast('★ Cache is up', 1500);
-    });
-
-    appCache.addEventListener('obsolete', () => {
-        createOrUpdateAppCacheToast('★ Site is obsolete');
-    });
-
-    appCache.addEventListener('progress', (e) => {
-        let dots = '.'.repeat(Math.min(Math.floor((e.loaded / e.total) * 3), 3));
-        createOrUpdateAppCacheToast('★ Downloading cache' + dots);
-
-        if (e.loaded + 1 == e.total) {
-            createOrUpdateAppCacheToast("★ Done wait ...");
-        }
-    });
-
-    appCache.addEventListener('updateready', () => {
-        if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-            createOrUpdateAppCacheToast('★ Site updated. Refresh');
-        }
-    });
 }
 
 function showToast(message, timeout = 2000) {
@@ -189,11 +120,6 @@ function showToast(message, timeout = 2000) {
     return toast;
 }
 
-function updateToastMessage(toast, message) {
-    if (!toast) return;
-    toast.textContent = message;
-}
-
 async function removeToast(toast) {
     if (!toast) return;
 
@@ -204,15 +130,26 @@ async function removeToast(toast) {
     });
 }
 
+/**
+ * 🔥 FIX PRINCIPAL AQUÍ
+ * SOLO se activa cuando wkOnlyMode = true (post jailbreak)
+ */
 function populatePayloadsPage(wkOnlyMode = false) {
     const payloadsView = document.getElementById('payloads-view');
     const buttonsContainer = document.getElementById('payloads-buttons-right');
 
-    // 🚨 FIX CRÍTICO: evitar reconstrucción múltiple (causa del “refresh”)
-    if (payloadsInitialized) return;
-    payloadsInitialized = true;
+    if (!payloadsView || !buttonsContainer) return;
 
-    // limpiar SOLO una vez
+    /**
+     * 🔥 CAMBIO CLAVE:
+     * antes bloqueabas siempre -> rompía reentradas
+     * ahora SOLO bloquea si ya se inicializó en modo wkOnly
+     */
+    if (wkOnlyMode && payloadsInitialized) return;
+
+    // SOLO marcar inicializado en modo jailbreak real
+    if (wkOnlyMode) payloadsInitialized = true;
+
     payloadsView.replaceChildren();
     buttonsContainer.replaceChildren();
 
@@ -220,43 +157,47 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.classList.add("btn");
     debugMessage.style.pointerEvents = "none";
     debugMessage.style.cursor = "default";
+
     debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
 
     payloadsView.appendChild(debugMessage);
 
-    buttonsContainer.style.display = "none";
+    // ❌ IMPORTANTE: NO ocultar container (esto te podía romper layout / triggers)
+    // buttonsContainer.style.display = "none";
 
-    // helper para evitar listeners duplicados
     const dispatchPayload = (fileName) => {
         const payload = payload_map.find(p => p.fileName === fileName);
-        if (payload) {
-            window.dispatchEvent(
-                new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, {
-                    detail: payload
-                })
-            );
-        }
+        if (!payload) return;
+
+        window.dispatchEvent(
+            new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, {
+                detail: payload
+            })
+        );
     };
 
-    const backporkButton = document.createElement("a");
-    backporkButton.classList.add("btn", "w-100");
-    backporkButton.tabIndex = 0;
-    backporkButton.style.display = "block";
-    backporkButton.innerHTML =
-        "<p class='payload-btn-title'>BackPork</p><p class='payload-btn-description'>BackPork payload</p><p class='payload-btn-info'>v0.1</p>";
+    const makeButton = (title, desc, info, file) => {
+        const btn = document.createElement("a");
+        btn.classList.add("btn", "w-100");
+        btn.tabIndex = 0;
+        btn.style.display = "block";
 
-    backporkButton.onclick = () => dispatchPayload("Backpork.elf");
+        btn.innerHTML = `
+            <p class='payload-btn-title'>${title}</p>
+            <p class='payload-btn-description'>${desc}</p>
+            <p class='payload-btn-info'>${info}</p>
+        `;
 
-    buttonsContainer.appendChild(backporkButton);
+        btn.onclick = () => dispatchPayload(file);
 
-    const shadowButton = document.createElement("a");
-    shadowButton.classList.add("btn", "w-100");
-    shadowButton.tabIndex = 0;
-    shadowButton.style.display = "block";
-    shadowButton.innerHTML =
-        "<p class='payload-btn-title'>shadowmount</p><p class='payload-btn-description'>shadowmount payload</p><p class='payload-btn-info'>v1.03</p>";
+        return btn;
+    };
 
-    shadowButton.onclick = () => dispatchPayload("shadowmount.elf");
+    buttonsContainer.appendChild(
+        makeButton("BackPork", "BackPork payload", "v0.1", "Backpork.elf")
+    );
 
-    buttonsContainer.appendChild(shadowButton);
+    buttonsContainer.appendChild(
+        makeButton("shadowmount", "shadowmount payload", "v1.03", "shadowmount.elf")
+    );
 }
