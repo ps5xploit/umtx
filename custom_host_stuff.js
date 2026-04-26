@@ -47,54 +47,48 @@ async function run(wkonly = false, animate = true) {
    SWITCH PAGE
 ========================================================= */
 async function switchPage(id, animate = true) {
-    const parent = document.getElementById('main-content');
-    const target = document.getElementById(id);
+    const parentElement = document.getElementById('main-content');
+    const targetElement = document.getElementById(id);
 
-    if (!parent || !target || target.parentElement !== parent) {
+    if (!parentElement || !targetElement || targetElement.parentElement !== parentElement) {
         throw new Error('Invalid target element');
     }
 
-    const old = parent.querySelector('.selected');
+    const oldSelectedElement = parentElement.querySelector('.selected');
 
-    if (old) {
+    if (oldSelectedElement) {
+        if (animate) {
+            await new Promise(resolve => {
+                oldSelectedElement.addEventListener("transitionend", function handler(e) {
+                    if (e.target === oldSelectedElement) {
+                        oldSelectedElement.removeEventListener("transitionend", handler);
+                        resolve();
+                    }
+                });
+                oldSelectedElement.classList.remove('selected');
+            });
+        } else {
+            oldSelectedElement.classList.remove('selected');
+        }
+    }
+
+    if (animate) {
         await new Promise(resolve => {
-            if (!animate) {
-                old.classList.remove('selected');
-                resolve();
-                return;
-            }
-
-            old.addEventListener("transitionend", function h(e) {
-                if (e.target === old) {
-                    old.removeEventListener("transitionend", h);
+            targetElement.addEventListener("transitionend", function handler(e) {
+                if (e.target === targetElement) {
+                    targetElement.removeEventListener("transitionend", handler);
                     resolve();
                 }
             });
-
-            old.classList.remove('selected');
+            targetElement.classList.add('selected');
         });
+    } else {
+        targetElement.classList.add('selected');
     }
-
-    await new Promise(resolve => {
-        if (!animate) {
-            target.classList.add('selected');
-            resolve();
-            return;
-        }
-
-        target.addEventListener("transitionend", function h(e) {
-            if (e.target === target) {
-                target.removeEventListener("transitionend", h);
-                resolve();
-            }
-        });
-
-        target.classList.add('selected');
-    });
 }
 
 /* =========================================================
-   PAYLOAD UI (FIX REAL)
+   PAYLOAD UI (FIX REAL DEL REFRESH)
 ========================================================= */
 function populatePayloadsPage(wkOnlyMode = false) {
 
@@ -103,12 +97,12 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
     if (!payloadsView || !buttonsContainer) return;
 
-    /* 🔥 FIX CLAVE: idempotencia real */
+    /* 🔥 FIX CRÍTICO: inicializar SOLO UNA VEZ REAL */
     if (payloadsView.dataset.initialized === "1") return;
     payloadsView.dataset.initialized = "1";
 
     /* =========================
-       DEBUG MESSAGE (UNA VEZ)
+       DEBUG MESSAGE
     ========================== */
     const debugMessage = document.createElement("div");
     debugMessage.className = "btn";
@@ -118,8 +112,11 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
     payloadsView.appendChild(debugMessage);
 
+    /* ⚠️ FIX IMPORTANTE: NO display none (causa refresh visual) */
+    buttonsContainer.style.visibility = "hidden";
+
     /* =========================
-       PAYLOAD DISPATCH
+       DISPATCH PAYLOAD
     ========================== */
     const dispatchPayload = (fileName) => {
         const payload = payload_map.find(p => p.fileName === fileName);
@@ -133,11 +130,10 @@ function populatePayloadsPage(wkOnlyMode = false) {
     };
 
     /* =========================
-       BUTTON CREATION (NO RESET DOM)
+       BOTONES (SIN REBUILD LOOP)
     ========================== */
 
     const createButton = (title, desc, info, file) => {
-
         const btn = document.createElement("a");
         btn.className = "btn w-100";
         btn.tabIndex = 0;
@@ -153,10 +149,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
         return btn;
     };
 
-    /* =========================
-       AÑADIR SOLO UNA VEZ
-    ========================== */
-
+    /* SOLO UNA VEZ */
     if (!buttonsContainer.dataset.ready) {
 
         buttonsContainer.appendChild(
@@ -169,15 +162,11 @@ function populatePayloadsPage(wkOnlyMode = false) {
 
         buttonsContainer.dataset.ready = "1";
     }
-
-    /* IMPORTANTE: NO display none (causa reflow raro) */
-    buttonsContainer.style.visibility = "hidden";
 }
 
 /* =========================================================
-   TOAST SYSTEM (SIN CAMBIOS CRÍTICOS)
+   TOAST (SIN CAMBIOS CRÍTICOS)
 ========================================================= */
-
 function showToast(message, timeout = 2000) {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
