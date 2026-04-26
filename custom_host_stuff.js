@@ -6,12 +6,11 @@ const MAINLOOP_EXECUTE_PAYLOAD_REQUEST = "mainloop_execute_payload_request";
 
 let exploitStarted = false;
 
-// 🚨 FIX: evitar múltiples inicializaciones de payload UI
-let payloadsInitialized = false;
-
+/* =========================================================
+   RUN
+========================================================= */
 async function run(wkonly = false, animate = true) {
     if (exploitStarted) return;
-
     exploitStarted = true;
 
     await switchPage("console-view", animate);
@@ -23,7 +22,7 @@ async function run(wkonly = false, animate = true) {
 
     try {
         if (!animate) {
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await new Promise(r => setTimeout(r, 100));
         }
 
         await run_psfree(fw_str);
@@ -32,8 +31,7 @@ async function run(wkonly = false, animate = true) {
         log("Webkit exploit failed: " + error, LogLevel.ERROR);
         log("Retrying in 2 seconds...", LogLevel.LOG);
 
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
+        await new Promise(r => setTimeout(r, 2000));
         window.location.reload();
         return;
     }
@@ -43,141 +41,151 @@ async function run(wkonly = false, animate = true) {
     } catch (error) {
         log("Kernel exploit/main() failed: " + error, LogLevel.ERROR);
     }
-
-    return;
 }
 
+/* =========================================================
+   SWITCH PAGE
+========================================================= */
 async function switchPage(id, animate = true) {
-    const parentElement = document.getElementById('main-content');
-    const targetElement = document.getElementById(id);
+    const parent = document.getElementById('main-content');
+    const target = document.getElementById(id);
 
-    if (!targetElement || targetElement.parentElement !== parentElement) {
+    if (!parent || !target || target.parentElement !== parent) {
         throw new Error('Invalid target element');
     }
 
-    const oldSelectedElement = parentElement.querySelector('.selected');
+    const old = parent.querySelector('.selected');
 
-    if (oldSelectedElement) {
-        if (animate) {
-            await new Promise((resolve) => {
-                oldSelectedElement.addEventListener("transitionend", function handler(event) {
-                    if (event.target === oldSelectedElement) {
-                        oldSelectedElement.removeEventListener("transitionend", handler);
-                        resolve();
-                    }
-                });
+    if (old) {
+        await new Promise(resolve => {
+            if (!animate) {
+                old.classList.remove('selected');
+                resolve();
+                return;
+            }
 
-                oldSelectedElement.classList.remove('selected');
-            });
-        } else {
-            oldSelectedElement.style.setProperty('transition', 'none', 'important');
-            oldSelectedElement.offsetHeight;
-            oldSelectedElement.classList.remove('selected');
-            oldSelectedElement.offsetHeight;
-            oldSelectedElement.style.removeProperty('transition');
-        }
-    }
-
-    if (animate) {
-        await new Promise((resolve) => {
-            targetElement.addEventListener("transitionend", function handler(event) {
-                if (event.target === targetElement) {
-                    targetElement.removeEventListener("transitionend", handler);
+            old.addEventListener("transitionend", function h(e) {
+                if (e.target === old) {
+                    old.removeEventListener("transitionend", h);
                     resolve();
                 }
             });
 
-            targetElement.classList.add('selected');
+            old.classList.remove('selected');
         });
-    } else {
-        targetElement.style.setProperty('transition', 'none', 'important');
-        targetElement.offsetHeight;
-        targetElement.classList.add('selected');
-        targetElement.offsetHeight;
-        targetElement.style.removeProperty('transition');
     }
+
+    await new Promise(resolve => {
+        if (!animate) {
+            target.classList.add('selected');
+            resolve();
+            return;
+        }
+
+        target.addEventListener("transitionend", function h(e) {
+            if (e.target === target) {
+                target.removeEventListener("transitionend", h);
+                resolve();
+            }
+        });
+
+        target.classList.add('selected');
+    });
 }
 
-function registerAppCacheEventHandlers() {
-    var appCache = window.applicationCache;
+/* =========================================================
+   PAYLOAD UI (FIX REAL)
+========================================================= */
+function populatePayloadsPage(wkOnlyMode = false) {
 
-    let toast;
+    const payloadsView = document.getElementById('payloads-view');
+    const buttonsContainer = document.getElementById('payloads-buttons-right');
 
-    function createOrUpdateAppCacheToast(message, timeout = -1) {
-        if (!toast) {
-            toast = showToast(message, timeout);
-        } else {
-            updateToastMessage(toast, message);
-        }
+    if (!payloadsView || !buttonsContainer) return;
 
-        if (timeout > 0) {
-            setTimeout(() => {
-                removeToast(toast);
-                toast = null;
-            }, timeout);
-        }
+    /* 🔥 FIX CLAVE: idempotencia real */
+    if (payloadsView.dataset.initialized === "1") return;
+    payloadsView.dataset.initialized = "1";
+
+    /* =========================
+       DEBUG MESSAGE (UNA VEZ)
+    ========================== */
+    const debugMessage = document.createElement("div");
+    debugMessage.className = "btn";
+    debugMessage.style.pointerEvents = "none";
+    debugMessage.style.cursor = "default";
+    debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
+
+    payloadsView.appendChild(debugMessage);
+
+    /* =========================
+       PAYLOAD DISPATCH
+    ========================== */
+    const dispatchPayload = (fileName) => {
+        const payload = payload_map.find(p => p.fileName === fileName);
+        if (!payload) return;
+
+        window.dispatchEvent(
+            new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, {
+                detail: payload
+            })
+        );
+    };
+
+    /* =========================
+       BUTTON CREATION (NO RESET DOM)
+    ========================== */
+
+    const createButton = (title, desc, info, file) => {
+
+        const btn = document.createElement("a");
+        btn.className = "btn w-100";
+        btn.tabIndex = 0;
+
+        btn.innerHTML = `
+            <p class='payload-btn-title'>${title}</p>
+            <p class='payload-btn-description'>${desc}</p>
+            <p class='payload-btn-info'>${info}</p>
+        `;
+
+        btn.onclick = () => dispatchPayload(file);
+
+        return btn;
+    };
+
+    /* =========================
+       AÑADIR SOLO UNA VEZ
+    ========================== */
+
+    if (!buttonsContainer.dataset.ready) {
+
+        buttonsContainer.appendChild(
+            createButton("BackPork", "BackPork payload", "v0.1", "Backpork.elf")
+        );
+
+        buttonsContainer.appendChild(
+            createButton("shadowmount", "shadowmount payload", "v1.03", "shadowmount.elf")
+        );
+
+        buttonsContainer.dataset.ready = "1";
     }
 
-    if (document.documentElement.hasAttribute("manifest")) {
-        if (!navigator.onLine) {
-            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
-        } else {
-            createOrUpdateAppCacheToast("★ Check updates...");
-        }
-    }
-
-    appCache.addEventListener('cached', () => {
-        createOrUpdateAppCacheToast('★ Finished caching site', 1500);
-    });
-
-    appCache.addEventListener('checking', () => {
-        createOrUpdateAppCacheToast('★ Check updates...');
-    });
-
-    appCache.addEventListener('downloading', () => {
-        createOrUpdateAppCacheToast('★ Downloading cache');
-    });
-
-    appCache.addEventListener('error', () => {
-        if (navigator.onLine) {
-            createOrUpdateAppCacheToast('★ Error caching', 5000);
-        } else {
-            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
-        }
-    });
-
-    appCache.addEventListener('noupdate', () => {
-        createOrUpdateAppCacheToast('★ Cache is up', 1500);
-    });
-
-    appCache.addEventListener('obsolete', () => {
-        createOrUpdateAppCacheToast('★ Site is obsolete');
-    });
-
-    appCache.addEventListener('progress', (e) => {
-        let dots = '.'.repeat(Math.min(Math.floor((e.loaded / e.total) * 3), 3));
-        createOrUpdateAppCacheToast('★ Downloading cache' + dots);
-
-        if (e.loaded + 1 == e.total) {
-            createOrUpdateAppCacheToast("★ Done wait ...");
-        }
-    });
-
-    appCache.addEventListener('updateready', () => {
-        if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-            createOrUpdateAppCacheToast('★ Site updated. Refresh');
-        }
-    });
+    /* IMPORTANTE: NO display none (causa reflow raro) */
+    buttonsContainer.style.visibility = "hidden";
 }
+
+/* =========================================================
+   TOAST SYSTEM (SIN CAMBIOS CRÍTICOS)
+========================================================= */
 
 function showToast(message, timeout = 2000) {
-    const toastContainer = document.getElementById('toast-container');
+    const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
 
     toast.className = 'toast';
     toast.textContent = message;
 
-    toastContainer.appendChild(toast);
+    container.appendChild(toast);
 
     toast.offsetHeight;
     toast.classList.add('show');
@@ -189,11 +197,6 @@ function showToast(message, timeout = 2000) {
     return toast;
 }
 
-function updateToastMessage(toast, message) {
-    if (!toast) return;
-    toast.textContent = message;
-}
-
 async function removeToast(toast) {
     if (!toast) return;
 
@@ -202,61 +205,4 @@ async function removeToast(toast) {
     toast.addEventListener('transitionend', () => {
         toast.remove();
     });
-}
-
-function populatePayloadsPage(wkOnlyMode = false) {
-    const payloadsView = document.getElementById('payloads-view');
-    const buttonsContainer = document.getElementById('payloads-buttons-right');
-
-    // 🚨 FIX CRÍTICO: evitar reconstrucción múltiple (causa del “refresh”)
-    if (payloadsInitialized) return;
-    payloadsInitialized = true;
-
-    // limpiar SOLO una vez
-    payloadsView.replaceChildren();
-    buttonsContainer.replaceChildren();
-
-    const debugMessage = document.createElement("div");
-    debugMessage.classList.add("btn");
-    debugMessage.style.pointerEvents = "none";
-    debugMessage.style.cursor = "default";
-    debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
-
-    payloadsView.appendChild(debugMessage);
-
-    buttonsContainer.style.display = "none";
-
-    // helper para evitar listeners duplicados
-    const dispatchPayload = (fileName) => {
-        const payload = payload_map.find(p => p.fileName === fileName);
-        if (payload) {
-            window.dispatchEvent(
-                new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, {
-                    detail: payload
-                })
-            );
-        }
-    };
-
-    const backporkButton = document.createElement("a");
-    backporkButton.classList.add("btn", "w-100");
-    backporkButton.tabIndex = 0;
-    backporkButton.style.display = "block";
-    backporkButton.innerHTML =
-        "<p class='payload-btn-title'>BackPork</p><p class='payload-btn-description'>BackPork payload</p><p class='payload-btn-info'>v0.1</p>";
-
-    backporkButton.onclick = () => dispatchPayload("Backpork.elf");
-
-    buttonsContainer.appendChild(backporkButton);
-
-    const shadowButton = document.createElement("a");
-    shadowButton.classList.add("btn", "w-100");
-    shadowButton.tabIndex = 0;
-    shadowButton.style.display = "block";
-    shadowButton.innerHTML =
-        "<p class='payload-btn-title'>shadowmount</p><p class='payload-btn-description'>shadowmount payload</p><p class='payload-btn-info'>v1.03</p>";
-
-    shadowButton.onclick = () => dispatchPayload("shadowmount.elf");
-
-    buttonsContainer.appendChild(shadowButton);
 }
