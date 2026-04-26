@@ -1,4 +1,4 @@
- // @ts-check
+// @ts-check
 
 const LOCALSTORE_REDIRECTOR_LAST_URL_KEY = "redirector_last_url";
 const SESSIONSTORE_ON_LOAD_AUTORUN_KEY = "on_load_autorun";
@@ -194,14 +194,28 @@ function updateToastMessage(toast, message) {
     toast.textContent = message;
 }
 
+/* 🔥 FIX REAL: toast no se queda colgado nunca */
 async function removeToast(toast) {
     if (!toast) return;
 
+    if (toast.dataset.closing === "1") return;
+    toast.dataset.closing = "1";
+
     toast.classList.add('hide');
 
+    // fallback duro (WebKit safe)
+    const fallback = setTimeout(() => {
+        if (toast && toast.parentElement) {
+            toast.remove();
+        }
+    }, 600);
+
     toast.addEventListener('transitionend', () => {
-        toast.remove();
-    });
+        clearTimeout(fallback);
+        if (toast && toast.parentElement) {
+            toast.remove();
+        }
+    }, { once: true });
 }
 
 function populatePayloadsPage(wkOnlyMode = false) {
@@ -218,7 +232,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.style.pointerEvents = "none";
     debugMessage.style.cursor = "default";
 
-    // 🟡 ESTADO 1: aún no listo para payloads
+    // 🟡 ESTADO 1
     if (!isWkOnly) {
         debugMessage.innerHTML =
             "★ Debug Settings Ready ✓<br>Exit and Return to send payloads";
@@ -232,7 +246,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
         return;
     }
 
-    // 🟢 ESTADO 2: payloads disponibles
+    // 🟢 ESTADO 2
     debugMessage.innerHTML =
         "★ Debug Settings Ready ✓<br>Waiting payload";
 
