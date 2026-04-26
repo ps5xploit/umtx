@@ -39,9 +39,8 @@ async function run(wkonly = false, animate = true) {
         log("Kernel exploit/main() failed: " + error, LogLevel.ERROR);
     }
 
-    log("Retrying in 4 seconds...", LogLevel.LOG);
-    await new Promise((resolve) => setTimeout(resolve, 4000));
-    window.location.reload();
+    // 🔥 ELIMINADO el refresh automático
+    return;
 }
 
 async function switchPage(id, animate = true) {
@@ -229,7 +228,6 @@ function populatePayloadsPage(wkOnlyMode = false) {
         }
     }
 
-    // Mensaje de estado fijo a la izquierda
     const debugMessage = document.createElement("div");
     debugMessage.classList.add("btn");
     debugMessage.style.pointerEvents = "none";
@@ -237,10 +235,8 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.innerHTML = "★ Debug Settings Ready ✓<br>Waiting payload";
     payloadsView.appendChild(debugMessage);
 
-    // Ocultar botones hasta que el debugMessage esté renderizado en pantalla
     buttonsContainer.style.display = "none";
 
-    // Botón BackPork
     const backporkButton = document.createElement("a");
     backporkButton.classList.add("btn", "w-100");
     backporkButton.tabIndex = 0;
@@ -252,7 +248,6 @@ function populatePayloadsPage(wkOnlyMode = false) {
     });
     buttonsContainer.appendChild(backporkButton);
 
-    // Botón shadowmount
     const shadowButton = document.createElement("a");
     shadowButton.classList.add("btn", "w-100");
     shadowButton.tabIndex = 0;
@@ -263,6 +258,4 @@ function populatePayloadsPage(wkOnlyMode = false) {
         if (payload) window.dispatchEvent(new CustomEvent(MAINLOOP_EXECUTE_PAYLOAD_REQUEST, { detail: payload }));
     });
     buttonsContainer.appendChild(shadowButton);
-
-    // Los botones se muestran desde exploit.js tras switchPage("payloads-view")
 }
