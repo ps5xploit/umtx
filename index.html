@@ -24,12 +24,12 @@
   display: inline-block !important;
   width: calc(50% - 16px) !important;
   max-width: 200px !important;
-  min-height: 32px !important;  /* más bajo */
+  min-height: 32px !important;
   margin: 5px 6px !important;
 
   line-height: normal !important;
 
-  padding: 5px 6px !important;  /*  padding más pequeño */
+  padding: 5px 6px !important;
 
   border-radius: 25px !important;
 
@@ -46,10 +46,15 @@
   overflow: hidden;
 }
 
-/* hover */
+/* hover - TODO el texto dentro del botón cambia a negro */
+.payload-item:hover,
+.payload-item:hover * {
+  color: #000 !important;
+}
+
+/* hover - fondo amarillo y animación */
 .payload-item:hover {
   background-color: #FFFF00 !important;
-  color: #000 !important;
   transform: scale(1.02) !important;
   animation: shake 0.4s infinite;
 }
@@ -76,12 +81,6 @@
   opacity: 0.8;
   white-space: normal !important;
   margin-top: 1px;
-  transition: color 0.2s ease-in-out; /* suaviza el cambio */
-}
-
-/* hover - cambia la descripción a negro */
-.payload-item:hover .payload-btn-description {
-  color: #000 !important;
 }
 
 /* versión */
