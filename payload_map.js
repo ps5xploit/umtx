@@ -63,6 +63,18 @@ const payload_map = [
         toPort: 9021
     },
 
+    {
+        displayTitle: "Cache Remover",
+        description: "Cache Remover payload",
+        fileName: "cache-remover.elf",
+        author: "Cache Remover",
+        projectSource: "Cache Remover",
+        binarySource: "Cache Remover",
+        version: "1.02",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
+
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove
     //     displayTitle: "Browser appcache remover",

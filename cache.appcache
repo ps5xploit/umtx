@@ -1,7 +1,8 @@
 CACHE MANIFEST 
-# Generated on 26/04/2026 uodate add etahen 2.5b + payloads full  is UMTX2 h 21:19 #
+# Generated on 25/12/2025 uodate add etahen 2.5b kstuff 10.01 full  is UMTX2 h 21:19 #
 
 index.html 
+payloads\cache-remover.elf
 payloads\Backpork.elf
 payloads\elfldr.elf 
 payloads\shadowmount.elf
