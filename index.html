@@ -12,32 +12,35 @@
    ========================= */
 
 /* Contenedor principal */
-#payloads-buttons-right {
-  position: fixed !important;
-  right: 20px !important;
-  top: 120px !important;
-  z-index: 9999 !important;
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 8px 12px !important;
-  width: auto !important;
-  max-width: 450px !important;
-  padding: 10px !important;
+#payloads-view {
+  width: 100% !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
 }
 
 /* Botones compactos y elegantes */
 .payload-item {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  min-height: 42px !important;
-  padding: 6px 10px !important;
+  display: inline-block !important;
+  width: calc(50% - 16px) !important;
+  max-width: 200px !important;
+  min-height: 32px !important;  /* más bajo */
+  margin: 5px 6px !important;
+
+  line-height: normal !important;
+
+  padding: 5px 6px !important;  /*  padding más pequeño */
+
   border-radius: 25px !important;
+
   background-color: #0a0a0a !important;
   border: 1.5px solid #FFFF00 !important;
-  color: #fff !important;
+
+  color: #fff;
+
   text-align: center !important;
+  vertical-align: top !important;
+
   transition: all 0.2s ease-in-out !important;
   cursor: pointer;
   overflow: hidden;
@@ -55,35 +58,32 @@
 .payload-item p {
   margin: 0;
   padding: 0;
-  line-height: 1.3;
+  line-height: 1.15;
   width: 100%;
   text-align: center;
 }
 
-/* título + descripción en la misma línea */
+/* título */
 .payload-item .payload-btn-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.3px;
-  display: inline-block !important;
-  margin-right: 4px !important;
 }
 
-/* descripción (al lado del título) */
+/* descripción */
 .payload-item .payload-btn-description {
   font-size: 9px;
   opacity: 0.8;
-  display: inline-block !important;
-  font-weight: normal;
+  white-space: normal !important;
+  margin-top: 1px;
 }
 
 /* versión */
 .payload-item .payload-btn-info {
   font-size: 8px;
   opacity: 0.5;
-  margin-top: 2px;
+  margin-top: 1px;
   font-family: monospace;
-  display: block !important;
 }
 
 /* shake animation */
@@ -98,10 +98,9 @@
 
 /* pantallas pequeñas: 1 columna */
 @media (max-width: 550px) {
-  #payloads-buttons-right {
-    grid-template-columns: 1fr !important;
-    right: 50% !important;
-    transform: translateX(50%) !important;
+  .payload-item {
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
   }
 }
 
