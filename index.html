@@ -8,7 +8,7 @@
 <style>
 
 /* =========================
-   BOTONES EN FILAS (2 columnas) - VERSIÓN MEJORADA
+   BOTONES EN FILAS (2 columnas) - VERSIÓN COMPACTA
    ========================= */
 
 /* Contenedor principal */
@@ -19,19 +19,19 @@
   text-align: center !important;
 }
 
-/* Botones más compactos y elegantes */
+/* Botones compactos y elegantes */
 .payload-item {
   display: inline-block !important;
   width: calc(50% - 16px) !important;
   max-width: 200px !important;
-  min-height: 65px;
-  margin: 6px 6px !important;
+  min-height: 52px !important;  /* más bajo */
+  margin: 5px 6px !important;
 
   line-height: normal !important;
 
-  padding: 6px 8px !important;
+  padding: 5px 6px !important;  /*  padding más pequeño */
 
-  border-radius: 30px !important; /* más redondeados */
+  border-radius: 25px !important;
 
   background-color: #0a0a0a !important;
   border: 1.5px solid #FFFF00 !important;
@@ -46,7 +46,7 @@
   overflow: hidden;
 }
 
-/* hover más suave */
+/* hover */
 .payload-item:hover {
   background-color: #FFFF00 !important;
   color: #000 !important;
@@ -58,31 +58,31 @@
 .payload-item p {
   margin: 0;
   padding: 0;
-  line-height: 1.2;
+  line-height: 1.15;
   width: 100%;
   text-align: center;
 }
 
-/* título más destacado */
+/* título */
 .payload-item .payload-btn-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 /* descripción */
 .payload-item .payload-btn-description {
-  font-size: 10px;
+  font-size: 9px;
   opacity: 0.8;
   white-space: normal !important;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 /* versión */
 .payload-item .payload-btn-info {
-  font-size: 9px;
+  font-size: 8px;
   opacity: 0.5;
-  margin-top: 2px;
+  margin-top: 1px;
   font-family: monospace;
 }
 
