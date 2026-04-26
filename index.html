@@ -8,12 +8,22 @@
 <style>
 
 /* =========================
-   SOLO BOTONES makeBtn (FINAL)
+   SOLO BOTONES makeBtn (FINAL) - CON GRID 2 COLUMNAS
    ========================= */
+
+/* Contenedor padre de los botones (grid de 2 columnas) */
+#payloads-view {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  justify-items: center !important;
+  align-items: start !important;
+}
 
 .payload-item {
   height: auto !important;
-  width: 220px !important;
+  width: 100% !important;  /* 🔥 cambio: antes 220px fijo, ahora ocupa el ancho de la columna */
+  max-width: 220px !important; /* opcional: mantiene un máximo */
   min-height: 55px;
 
   line-height: normal !important;
@@ -72,11 +82,11 @@
   opacity: 0.6;
 }
 
-/* spacing grid */
-.payload-item:nth-child(2n),
+/* spacing grid - ya no es necesario porque el grid maneja el espacio */
+/* .payload-item:nth-child(2n),
 .payload-item:last-child {
   margin: 0.25rem 0.1rem !important;
-}
+} */
 
 /* shake animation (la mantienes igual) */
 @keyframes shake {
@@ -87,22 +97,7 @@
   80% { transform: translateX(5px); }
   100% { transform: translateX(0); }
 }
-/* =========================
-   GRID para botones (2 columnas)
-   ========================= */
-#payloads-view {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 12px !important;
-  justify-items: center !important;
-  align-items: start !important;
-}
 
-.payload-item {
-  width: 100% !important;
-  max-width: 220px !important;
-  margin: 0 auto !important;
-}
         a { color: white; text-decoration: none; }
         .Estilo3 { font-size: 24px; }
         .Estilo6 { font-size: 12px; font-weight: bold; }
