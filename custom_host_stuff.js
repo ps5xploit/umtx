@@ -271,18 +271,20 @@ function populatePayloadsPage(wkOnlyMode = false) {
     };
 
     const makeBtn = (title, desc, file, ver) => {
-        const btn = document.createElement("a");
+      const btn = document.createElement("a");
       btn.classList.add("btn", "w-100", "payload-item");
-        btn.tabIndex = 0;
-        btn.style.display = "block";
-        btn.innerHTML = `
-            <p class='payload-btn-title'>${title}</p>
-            <p class='payload-btn-description'>${desc}</p>
-            <p class='payload-btn-info'>${ver}</p>
-        `;
-        btn.onclick = () => dispatchPayload(file);
-        return btn;
-    };
+      btn.tabIndex = 0;
+      btn.style.display = "block";
+      btn.innerHTML = `
+          <p class='payload-btn-title'>
+              ${title}
+              <span class='payload-btn-description'>${desc}</span>
+          </p>
+          <p class='payload-btn-info'>${ver}</p>
+      `;
+      btn.onclick = () => dispatchPayload(file);
+      return btn;
+  };
     buttonsContainer.appendChild(
         makeBtn("App dumper", "v1.09", "ps5-app-dumper.elf", "")
     );
