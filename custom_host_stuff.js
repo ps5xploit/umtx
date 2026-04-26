@@ -293,7 +293,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     );
 
     buttonsContainer.appendChild(
-        makeBtn("Shadow Mount", "v1.03", "shadowmount.elf", "")
+        makeBtn("ShadowMount", "v1.03", "shadowmount.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("Cache Removed", "v1.02", "cache-remover.elf", "")
