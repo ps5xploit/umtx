@@ -197,11 +197,26 @@ function updateToastMessage(toast, message) {
 async function removeToast(toast) {
     if (!toast) return;
 
+    // evita doble remove
+    if (toast.dataset.removing === "1") return;
+    toast.dataset.removing = "1";
+
     toast.classList.add('hide');
 
+    // 🔥 fallback duro (NO depende de CSS ni WebKit events)
+    const forceRemove = setTimeout(() => {
+        if (toast && toast.parentElement) {
+            toast.remove();
+        }
+    }, 600);
+
+    // si transition funciona, limpia fallback
     toast.addEventListener('transitionend', () => {
-        toast.remove();
-    });
+        clearTimeout(forceRemove);
+        if (toast && toast.parentElement) {
+            toast.remove();
+        }
+    }, { once: true });
 }
 
 function populatePayloadsPage(wkOnlyMode = false) {
