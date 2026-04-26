@@ -5,104 +5,13 @@ const SESSIONSTORE_ON_LOAD_AUTORUN_KEY = "on_load_autorun";
 const MAINLOOP_EXECUTE_PAYLOAD_REQUEST = "mainloop_execute_payload_request";
 
 let exploitStarted = false;
+
+// 🚨 FIX: evitar múltiples inicializaciones de payload UI
 let payloadsInitialized = false;
 
-/* =========================
-   HEX STYLE INJECT
-========================= */
-const hexStyle = document.createElement("style");
-hexStyle.textContent = `
-:root{
-  --sqrt3: 1.7320508075688772;
-  --edge-size: 70px;
-  --hex-width: calc(var(--edge-size) * 2);
-  --hex-height: calc(var(--sqrt3) * var(--edge-size));
-  --soft-yellow: rgba(0,255,0,1);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.hex-btn {
-  position: relative;
-  width: var(--hex-width);
-  height: var(--hex-height);
-  margin: 18px auto;
-  cursor: pointer;
-  transform: rotate(30deg);
-}
-
-.hex-btn:hover .hex:last-child {
-  transform: scale(1.25);
-  opacity: 1;
-}
-
-.hex-btn:hover .hex:first-child {
-  transform: scale(1.15);
-  opacity: 1;
-}
-
-.hex {
-  position: absolute;
-  top: 0;
-  left: calc(var(--edge-size) / 2);
-  width: var(--edge-size);
-  height: var(--hex-height);
-  opacity: 0.6;
-}
-
-.hex:first-child {
-  transform: scale(0.9);
-  transition: all 0.3s var(--ease-out-quart);
-}
-
-.hex:last-child {
-  transition: all 0.3s var(--ease-out-expo);
-}
-
-.hex div {
-  position: absolute;
-  width: var(--edge-size);
-  height: var(--hex-height);
-}
-
-.hex div:before,
-.hex div:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: var(--soft-yellow);
-  transition: height 0.3s;
-}
-
-.hex div:before { top: 0; }
-.hex div:after { bottom: 0; }
-
-.hex div:nth-child(1) { transform: rotate(0deg); }
-.hex div:nth-child(2) { transform: rotate(60deg); }
-.hex div:nth-child(3) { transform: rotate(120deg); }
-
-.hex div { transform-origin: center; }
-
-.hex-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  color: #0f0;
-  font-family: monospace;
-  font-size: 11px;
-  text-align: center;
-  pointer-events: none;
-}
-`;
-document.head.appendChild(hexStyle);
-
-/* =========================
-   RUN
-========================= */
 async function run(wkonly = false, animate = true) {
     if (exploitStarted) return;
+
     exploitStarted = true;
 
     await switchPage("console-view", animate);
@@ -114,7 +23,7 @@ async function run(wkonly = false, animate = true) {
 
     try {
         if (!animate) {
-            await new Promise((r) => setTimeout(r, 100));
+            await new Promise((resolve) => setTimeout(resolve, 100));
         }
 
         await run_psfree(fw_str);
@@ -123,7 +32,8 @@ async function run(wkonly = false, animate = true) {
         log("Webkit exploit failed: " + error, LogLevel.ERROR);
         log("Retrying in 2 seconds...", LogLevel.LOG);
 
-        await new Promise((r) => setTimeout(r, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
         window.location.reload();
         return;
     }
@@ -133,11 +43,10 @@ async function run(wkonly = false, animate = true) {
     } catch (error) {
         log("Kernel exploit/main() failed: " + error, LogLevel.ERROR);
     }
+
+    return;
 }
 
-/* =========================
-   SWITCH PAGE (UNCHANGED)
-========================= */
 async function switchPage(id, animate = true) {
     const parentElement = document.getElementById('main-content');
     const targetElement = document.getElementById(id);
@@ -151,12 +60,13 @@ async function switchPage(id, animate = true) {
     if (oldSelectedElement) {
         if (animate) {
             await new Promise((resolve) => {
-                oldSelectedElement.addEventListener("transitionend", function handler(e) {
-                    if (e.target === oldSelectedElement) {
+                oldSelectedElement.addEventListener("transitionend", function handler(event) {
+                    if (event.target === oldSelectedElement) {
                         oldSelectedElement.removeEventListener("transitionend", handler);
                         resolve();
                     }
                 });
+
                 oldSelectedElement.classList.remove('selected');
             });
         } else {
@@ -170,12 +80,13 @@ async function switchPage(id, animate = true) {
 
     if (animate) {
         await new Promise((resolve) => {
-            targetElement.addEventListener("transitionend", function handler(e) {
-                if (e.target === targetElement) {
+            targetElement.addEventListener("transitionend", function handler(event) {
+                if (event.target === targetElement) {
                     targetElement.removeEventListener("transitionend", handler);
                     resolve();
                 }
             });
+
             targetElement.classList.add('selected');
         });
     } else {
@@ -187,9 +98,126 @@ async function switchPage(id, animate = true) {
     }
 }
 
-/* =========================
-   PAYLOAD UI (HEX VERSION)
-========================= */
+function registerAppCacheEventHandlers() {
+    var appCache = window.applicationCache;
+
+    let toast;
+
+    function createOrUpdateAppCacheToast(message, timeout = -1) {
+        if (!toast) {
+            toast = showToast(message, timeout);
+        } else {
+            updateToastMessage(toast, message);
+        }
+
+        if (timeout > 0) {
+            setTimeout(() => {
+                removeToast(toast);
+                toast = null;
+            }, timeout);
+        }
+    }
+
+    if (document.documentElement.hasAttribute("manifest")) {
+        if (!navigator.onLine) {
+            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
+        } else {
+            createOrUpdateAppCacheToast("★ Check updates...");
+        }
+    }
+
+    appCache.addEventListener('cached', () => {
+        createOrUpdateAppCacheToast('★ Finished caching site', 1500);
+    });
+
+    appCache.addEventListener('checking', () => {
+        createOrUpdateAppCacheToast('★ Check updates...');
+    });
+
+    appCache.addEventListener('downloading', () => {
+        createOrUpdateAppCacheToast('★ Downloading cache');
+    });
+
+    appCache.addEventListener('error', () => {
+        if (navigator.onLine) {
+            createOrUpdateAppCacheToast('★ Error caching', 5000);
+        } else {
+            createOrUpdateAppCacheToast('★ Off-line wait...', 2000);
+        }
+    });
+
+    appCache.addEventListener('noupdate', () => {
+        createOrUpdateAppCacheToast('★ Cache is up', 1500);
+    });
+
+    appCache.addEventListener('obsolete', () => {
+        createOrUpdateAppCacheToast('★ Site is obsolete');
+    });
+
+    appCache.addEventListener('progress', (e) => {
+        let dots = '.'.repeat(Math.min(Math.floor((e.loaded / e.total) * 3), 3));
+        createOrUpdateAppCacheToast('★ Downloading cache' + dots);
+
+        if (e.loaded + 1 == e.total) {
+            createOrUpdateAppCacheToast("★ Done wait ...");
+        }
+    });
+
+    appCache.addEventListener('updateready', () => {
+        if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+            createOrUpdateAppCacheToast('★ Site updated. Refresh');
+        }
+    });
+}
+
+function showToast(message, timeout = 2000) {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+
+    toast.className = 'toast';
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    toast.offsetHeight;
+    toast.classList.add('show');
+
+    if (timeout > 0) {
+        setTimeout(() => removeToast(toast), timeout);
+    }
+
+    return toast;
+}
+
+function updateToastMessage(toast, message) {
+    if (!toast) return;
+    toast.textContent = message;
+}
+
+/* 🔥 FIX REAL: toast no se queda colgado nunca */
+async function removeToast(toast) {
+    if (!toast) return;
+
+    if (toast.dataset.closing === "1") return;
+    toast.dataset.closing = "1";
+
+    toast.classList.add('hide');
+
+    // fallback duro (WebKit safe)
+    const fallback = setTimeout(() => {
+        if (toast && toast.parentElement) {
+            toast.remove();
+        }
+    }, 600);
+
+    toast.addEventListener('transitionend', () => {
+        clearTimeout(fallback);
+        if (toast && toast.parentElement) {
+            toast.remove();
+        }
+    }, { once: true });
+}
+
 function populatePayloadsPage(wkOnlyMode = false) {
     const payloadsView = document.getElementById('payloads-view');
     const buttonsContainer = document.getElementById('payloads-buttons-right');
@@ -204,6 +232,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.style.pointerEvents = "none";
     debugMessage.style.cursor = "default";
 
+    // 🟡 ESTADO 1
     if (!isWkOnly) {
         debugMessage.innerHTML =
             "★ Debug Settings Ready ✓<br>Exit and Return to send payloads";
@@ -217,6 +246,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
         return;
     }
 
+    // 🟢 ESTADO 2
     debugMessage.innerHTML =
         "★ Debug Settings Ready ✓<br>Waiting payload";
 
@@ -240,41 +270,25 @@ function populatePayloadsPage(wkOnlyMode = false) {
         }
     };
 
-    /* =========================
-       HEX BUTTON FACTORY
-    ========================= */
-    const makeHexBtn = (title, desc, file, ver) => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "hex-btn";
-
-        const mkHex = () => {
-            const hex = document.createElement("div");
-            hex.className = "hex";
-            hex.innerHTML = "<div></div><div></div><div></div>";
-            return hex;
-        };
-
-        const h1 = mkHex();
-        const h2 = mkHex();
-
-        const label = document.createElement("div");
-        label.className = "hex-label";
-        label.innerHTML = `${title}<br>${ver}`;
-
-        wrapper.appendChild(h1);
-        wrapper.appendChild(h2);
-        wrapper.appendChild(label);
-
-        wrapper.onclick = () => dispatchPayload(file);
-
-        return wrapper;
+    const makeBtn = (title, desc, file, ver) => {
+        const btn = document.createElement("a");
+        btn.classList.add("btn", "w-100");
+        btn.tabIndex = 0;
+        btn.style.display = "block";
+        btn.innerHTML = `
+            <p class='payload-btn-title'>${title}</p>
+            <p class='payload-btn-description'>${desc}</p>
+            <p class='payload-btn-info'>${ver}</p>
+        `;
+        btn.onclick = () => dispatchPayload(file);
+        return btn;
     };
 
     buttonsContainer.appendChild(
-        makeHexBtn("BackPork", "BackPork payload", "Backpork.elf", "v0.1")
+        makeBtn("BackPork", "BackPork payload", "Backpork.elf", "v0.1")
     );
 
     buttonsContainer.appendChild(
-        makeHexBtn("shadowmount", "shadowmount payload", "shadowmount.elf", "v1.03")
+        makeBtn("shadowmount", "shadowmount payload", "shadowmount.elf", "v1.03")
     );
 }
