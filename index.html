@@ -8,45 +8,49 @@
 <style>
 
 /* =========================
-   BOTONES EN FILAS (2 columnas)
+   BOTONES EN FILAS (2 columnas) - VERSIÓN MEJORADA
    ========================= */
 
-/* Contenedor principal - asegura que tenga suficiente ancho */
+/* Contenedor principal */
 #payloads-view {
   width: 100% !important;
-  max-width: 500px !important; /* ajusta según necesites */
+  max-width: 480px !important;
   margin: 0 auto !important;
+  text-align: center !important;
 }
 
-/* Los botones se comportan como bloques en línea */
+/* Botones más compactos y elegantes */
 .payload-item {
-  display: inline-block !important;  /* 🔥 clave: inline-block para que se pongan uno al lado del otro */
-  width: calc(50% - 20px) !important; /* 50% menos el margen */
-  min-width: 180px !important;
-  min-height: 55px;
-  margin: 6px 8px !important;  /* separación entre botones */
+  display: inline-block !important;
+  width: calc(50% - 16px) !important;
+  max-width: 200px !important;
+  min-height: 65px;
+  margin: 6px 6px !important;
 
   line-height: normal !important;
 
-  padding: 8px 10px !important;
+  padding: 6px 8px !important;
 
-  border-radius: 18px !important;
+  border-radius: 30px !important; /* más redondeados */
 
-  background-color: black !important;
-  border: 2px solid #FFFF00 !important;
+  background-color: #0a0a0a !important;
+  border: 1.5px solid #FFFF00 !important;
 
   color: #fff;
 
   text-align: center !important;
-  vertical-align: top !important; /* alineación superior */
+  vertical-align: top !important;
 
+  transition: all 0.2s ease-in-out !important;
+  cursor: pointer;
   overflow: hidden;
 }
 
-/* hover */
+/* hover más suave */
 .payload-item:hover {
   background-color: #FFFF00 !important;
   color: #000 !important;
+  transform: scale(1.02) !important;
   animation: shake 0.4s infinite;
 }
 
@@ -54,46 +58,49 @@
 .payload-item p {
   margin: 0;
   padding: 0;
-  line-height: 1.1;
+  line-height: 1.2;
   width: 100%;
   text-align: center;
 }
 
+/* título más destacado */
 .payload-item .payload-btn-title {
   font-size: 13px;
   font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
+/* descripción */
 .payload-item .payload-btn-description {
-  font-size: 11px;
-  opacity: 0.85;
-  white-space: normal !important;
-}
-
-.payload-item .payload-btn-info {
   font-size: 10px;
-  opacity: 0.6;
+  opacity: 0.8;
+  white-space: normal !important;
+  margin-top: 2px;
 }
 
-/* centra los botones en la última fila si son impares */
-#payloads-view {
-  text-align: center !important;
+/* versión */
+.payload-item .payload-btn-info {
+  font-size: 9px;
+  opacity: 0.5;
+  margin-top: 2px;
+  font-family: monospace;
 }
 
 /* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
   100% { transform: translateX(0); }
 }
 
-/* para pantallas pequeñas, que no se amontonen */
+/* pantallas pequeñas: 1 columna */
 @media (max-width: 550px) {
   .payload-item {
-    width: calc(100% - 20px) !important; /* en móvil, 1 por fila */
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
   }
 }
 
