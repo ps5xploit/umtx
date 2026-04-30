@@ -310,4 +310,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     buttonsContainer.appendChild(
         makeBtn("np fake signin", " v1.1", "np-fake-signin-ps5.elf", "")
     );
+ buttonsContainer.appendChild(
+        makeBtn("Linux loader", " v1.0", "ps5-linux-loader.elf", "")
+    );
 }

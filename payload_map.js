@@ -130,6 +130,17 @@ const payload_map = [
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
+   {
+        displayTitle: "Linux loader",
+        description: "Linux loader",
+        fileName: "ps5-linux-loader.elf",
+        author: "Linux loader",
+        projectSource: "Linux loader",
+        binarySource: "Linux loader",
+        version: "v1.1",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
 
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove
