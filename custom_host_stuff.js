@@ -286,7 +286,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
       return btn;
   };
     buttonsContainer.appendChild(
-        makeBtn("App dumper", "v1.09", "ps5-app-dumper.elf", "")
+        makeBtn("App dumper", "v1.08", "ps5-app-dumper.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("BackPork", "v0.1", "Backpork.elf", "")
