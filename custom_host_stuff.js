@@ -293,7 +293,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     );
 
     buttonsContainer.appendChild(
-        makeBtn("ShadowMount", "v1.03", "shadowmount.elf", "")
+        makeBtn("ShadowMount", "v1.06", "shadowmount.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("VoidShell", "v3.0", "voidshell.elf", "")
