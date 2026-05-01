@@ -141,6 +141,17 @@ const payload_map = [
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
+   {
+        displayTitle: "voidshell",
+        description: "voidshell",
+        fileName: "voidshell.elf",
+        author: "voidshell",
+        projectSource: "voidshell",
+        binarySource: "voidshell",
+        version: "v3.0",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
 
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove

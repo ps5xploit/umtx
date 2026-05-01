@@ -1,7 +1,8 @@
 CACHE MANIFEST
-# Generated on 30/04/2026 uodate add etahen 2.5b +payloads +linux  is UMTX2 h 21:19 #
+# Generated on 01/05/2026 update add payloads  is ps5xploit auto etahen -UMTX2 h 11:02 #
 
 index.html
+payloads\voidshell.elf
 payloads\ps5-linux-loader.elf
 payloads\np-fake-signin-ps5.elf
 payloads\ps5-app-dumper.elf

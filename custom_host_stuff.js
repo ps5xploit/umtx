@@ -296,7 +296,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
         makeBtn("ShadowMount", "v1.03", "shadowmount.elf", "")
     );
     buttonsContainer.appendChild(
-        makeBtn("Cache Removed", "v1.02", "cache-remover.elf", "")
+        makeBtn("VoidShell", "v3.0", "voidshell.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("FTP Server", " v1.15", "ftp1.15.elf", "")
@@ -307,10 +307,14 @@ function populatePayloadsPage(wkOnlyMode = false) {
     buttonsContainer.appendChild(
         makeBtn("Websrv", " v0.29", "Websrv0.29.elf", "")
     );
+buttonsContainer.appendChild(
+        makeBtn("Linux loader", " v1.0", "ps5-linux-loader.elf", "")
+    );
     buttonsContainer.appendChild(
         makeBtn("np fake signin", " v1.1", "np-fake-signin-ps5.elf", "")
     );
- buttonsContainer.appendChild(
-        makeBtn("Linux loader", " v1.0", "ps5-linux-loader.elf", "")
+ 
+buttonsContainer.appendChild(
+        makeBtn("Cache Removed", "v1.02", "cache-remover.elf", "")
     );
 }
