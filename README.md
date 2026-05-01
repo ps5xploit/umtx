@@ -28,8 +28,7 @@ Supports PS5 firmware 1.00-5.50
 Includes payload menu
 Uses PSFree 150b by abc
 Auto-loads @john-tornblom's ELF loader
-Includes the 9020 elf loader for compatibility with older payloads (not available in webkit-only mode)
-Webkit-only mode for sending payloads and clearing appcache
+Includes the 9020 9021 elf loader 
 
 
 
