@@ -137,7 +137,7 @@ const payload_map = [
         author: "Linux loader",
         projectSource: "Linux loader",
         binarySource: "Linux loader",
-        version: "v1.1",
+        version: "v2.0",
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
