@@ -308,7 +308,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
         makeBtn("Websrv", " v0.29", "Websrv0.29.elf", "")
     );
 buttonsContainer.appendChild(
-        makeBtn("Linux loader", " v1.0", "ps5-linux-loader.elf", "")
+        makeBtn("Linux loader", " v2.0", "ps5-linux-loader.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("np fake signin", " v1.1", "np-fake-signin-ps5.elf", "")
