@@ -48,7 +48,7 @@ const payload_map = [
         author: "shadowmount",
         projectSource: "shadowmount",
         binarySource: "shadowmount",
-        version: "1.6.15",
+        version: "v1.06+",
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
@@ -138,7 +138,7 @@ const payload_map = [
         author: "Ghostcontrol",
         projectSource: "Ghostcontrol",
         binarySource: "Ghostcontrol",
-        version: "v1.0.4",
+        version: "v1.4",
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
