@@ -288,15 +288,12 @@ function populatePayloadsPage(wkOnlyMode = false) {
     buttonsContainer.appendChild(
         makeBtn("App dumper", "v1.08", "ps5-app-dumper.elf", "")
     );
-    buttonsContainer.appendChild(
-        makeBtn("BackPork", "v0.1", "Backpork.elf", "")
-    );
 
     buttonsContainer.appendChild(
         makeBtn("ShadowMount", "v1.06", "shadowmount.elf", "")
     );
     buttonsContainer.appendChild(
-        makeBtn("VoidShell", "v3.0", "voidshell.elf", "")
+        makeBtn("Ghostcontrol", "v1.0.4", "Ghostcontrol.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("FTP Server", " v1.15", "ftp1.15.elf", "")
