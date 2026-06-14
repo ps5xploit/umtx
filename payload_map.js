@@ -40,17 +40,7 @@ const payload_map = [
         version: "2.2b",
          supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
     },
-    {
-        displayTitle: "BackPork",
-        description: "BackPork payload",
-        fileName: "Backpork.elf",
-        author: "BackPork",
-        projectSource: "BackPork",
-        binarySource: "BackPork",
-        version: "0.1",
-        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
-        toPort: 9021
-    },
+
     {
         displayTitle: "shadowmount",
         description: "shadowmount payload",
@@ -58,7 +48,7 @@ const payload_map = [
         author: "shadowmount",
         projectSource: "shadowmount",
         binarySource: "shadowmount",
-        version: "1.03",
+        version: "1.6.15",
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
@@ -142,13 +132,13 @@ const payload_map = [
         toPort: 9021
     },
    {
-        displayTitle: "voidshell",
-        description: "voidshell",
-        fileName: "voidshell.elf",
-        author: "voidshell",
-        projectSource: "voidshell",
-        binarySource: "voidshell",
-        version: "v3.0",
+        displayTitle: "Ghostcontrol",
+        description: "Ghostcontrol",
+        fileName: "Ghostcontrol.elf",
+        author: "Ghostcontrol",
+        projectSource: "Ghostcontrol",
+        binarySource: "Ghostcontrol",
+        version: "v1.0.4",
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
