@@ -2,7 +2,7 @@ CACHE MANIFEST
 # Generated on 19/05/2026 update etahen 2.6b add payloads linuxloader2.0 is ps5xploit auto etahen -UMTX2 h 20:57 #
 
 index.html
-payloads\voidshell.elf
+payloads\Ghostcontrol.elf
 payloads\ps5-linux-loader.elf
 payloads\np-fake-signin-ps5.elf
 payloads\ps5-app-dumper.elf
@@ -10,7 +10,6 @@ payloads\ps5debug_v1.0b5.elf
 payloads\Websrv0.29.elf
 payloads\ftp1.15.elf
 payloads\cache-remover.elf
-payloads\Backpork.elf
 payloads\elfldr.elf
 payloads\shadowmount.elf
 payloads\etaHEN.bin
