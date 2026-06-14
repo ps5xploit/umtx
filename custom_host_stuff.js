@@ -290,10 +290,10 @@ function populatePayloadsPage(wkOnlyMode = false) {
     );
 
     buttonsContainer.appendChild(
-        makeBtn("ShadowMount", "v1.06", "shadowmount.elf", "")
+        makeBtn("ShadowMount", "v1.06+", "shadowmount.elf", "")
     );
     buttonsContainer.appendChild(
-        makeBtn("Ghostcontrol", "v1.0.4", "Ghostcontrol.elf", "")
+        makeBtn("Ghostcontrol", "v1.4", "Ghostcontrol.elf", "")
     );
     buttonsContainer.appendChild(
         makeBtn("FTP Server", " v1.15", "ftp1.15.elf", "")
