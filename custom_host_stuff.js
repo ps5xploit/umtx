@@ -194,7 +194,7 @@ function updateToastMessage(toast, message) {
     toast.textContent = message;
 }
 
-/* 🔥 FIX REAL: toast no se queda colgado nunca */
+
 async function removeToast(toast) {
     if (!toast) return;
 
