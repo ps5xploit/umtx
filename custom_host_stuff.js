@@ -6,7 +6,7 @@ const MAINLOOP_EXECUTE_PAYLOAD_REQUEST = "mainloop_execute_payload_request";
 
 let exploitStarted = false;
 
-// 🚨 FIX: evitar múltiples inicializaciones de payload UI
+// 
 let payloadsInitialized = false;
 
 async function run(wkonly = false, animate = true) {
@@ -232,7 +232,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     debugMessage.style.pointerEvents = "none";
     debugMessage.style.cursor = "default";
 
-    // 🟡 ESTADO 1
+    // 
     if (!isWkOnly) {
         debugMessage.innerHTML =
             "★ Debug Settings Ready ✓<br>Exit and Return to send payloads";
@@ -246,7 +246,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
         return;
     }
 
-    // 🟢 ESTADO 2
+    // 
     debugMessage.innerHTML =
         "★ Debug Settings Ready ✓<br>Waiting payload";
 
