@@ -142,6 +142,17 @@ const payload_map = [
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
+     {
+        displayTitle: "Trophy Unlocker",
+        description: "Trophy Unlocker",
+        fileName: "trophy_unlocker.elf",
+        author: "Trophy Unlocker",
+        projectSource: "Trophy Unlocker",
+        binarySource: "Trophy Unlocker",
+        version: "v1.0",
+        supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
+        toPort: 9021
+    },
 
     // {
     //     // https://github.com/Storm21CH/PS5_Browser_appCache_remove
