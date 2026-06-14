@@ -292,6 +292,9 @@ function populatePayloadsPage(wkOnlyMode = false) {
     buttonsContainer.appendChild(
         makeBtn("ShadowMount", "v1.06+", "shadowmount.elf", "")
     );
+     buttonsContainer.appendChild(
+        makeBtn("Trophy Unlocker", "v1.0", "trophy_unlocker.elf", "")
+    );
     buttonsContainer.appendChild(
         makeBtn("Ghostcontrol", "v1.4", "Ghostcontrol.elf", "")
     );
