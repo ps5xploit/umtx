@@ -37,7 +37,7 @@ const payload_map = [
         author: "LightningMods",
         projectSource: "https://github.com/LightningMods/etaHEN",
         binarySource: "https://github.com/LightningMods/etaHEN/releases/download/1.9b/etaHEN.bin",
-        version: "2.6b",
+        version: "2.5b",
          supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
     },
 
@@ -48,7 +48,7 @@ const payload_map = [
         author: "shadowmount",
         projectSource: "shadowmount",
         binarySource: "shadowmount",
-        version: "v1.06+",
+        version: "plus",
         supportedFirmwares: ["1.", "2.", "3.", "4.", "5."],
         toPort: 9021
     },
