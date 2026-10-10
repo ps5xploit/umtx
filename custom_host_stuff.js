@@ -290,7 +290,7 @@ function populatePayloadsPage(wkOnlyMode = false) {
     );
 
     buttonsContainer.appendChild(
-        makeBtn("ShadowMount", "v1.06+", "shadowmount.elf", "")
+        makeBtn("ShadowMount", "plus", "shadowmount.elf", "")
     );
      buttonsContainer.appendChild(
         makeBtn("Trophy Unlocker", "v1.0", "trophy_unlocker.elf", "")
